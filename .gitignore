@@ -1,0 +1,15 @@
+# Ignore build artifacts
+build/
+*.obj
+*.exe
+
+# Ignore Visual Studio stuff
+.vs/
+*.user
+*.suo
+*.VC.db
+*.ipch/
+
+# Ignore OS/macOS/Windows stuff
+.DS_Store
+Thumbs.db
