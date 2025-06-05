@@ -22,6 +22,9 @@
     <Filter Include="Source Files\external\ImGui">
       <UniqueIdentifier>{b1433a25-2142-46a5-88be-433615633b6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{5d5a743d-9fcb-4501-accb-92224bd4bbdc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="external\ImGui\src\imgui_demo.cpp">
       <Filter>Source Files\external\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.hpp">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
