@@ -186,6 +186,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EditorGUI.cpp" />
     <ClCompile Include="external\glad\src\glad.c" />
     <ClCompile Include="external\ImGui\src\imgui.cpp" />
     <ClCompile Include="external\ImGui\src\imgui_demo.cpp" />
@@ -197,6 +198,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Window.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EditorGUI.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

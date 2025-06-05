@@ -1,7 +1,8 @@
+#pragma once
+
 #include <SDL3/SDL.h>
 #include <glad/glad.h>
 
-#include <Windows.h>
 #include <iostream>
 
 #ifdef _EDITOR_BUILD
@@ -10,21 +11,17 @@
 
 class Window {
 private:
-	SDL_Window* window = NULL;
+	SDL_Window* sdl_window = NULL;
 	SDL_GLContext gl_context = (SDL_GLContext) 0;
 
-#ifdef _EDITOR_BUILD
-	ImGuiIO* io = NULL;
-#endif
+	bool w_active = false;
 
 public: 
 	Window(std::string title, int w, int h, SDL_WindowFlags flags);
 	~Window();
 
-#ifdef _EDITOR_BUILD
-	ImGuiIO& GetIO();
-#endif
+	SDL_Window* Get_SDL_Window();
+	SDL_GLContext Get_GL_Context();
 
-	void Destroy();
 	void Update();
 };

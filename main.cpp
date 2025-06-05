@@ -8,11 +8,12 @@
 #endif
 
 #include "Window.hpp"
+#include "EditorGUI.hpp"
 
 int main(int argc, char** argv) {
     Window window("SDL3 w openGL", 800, 600, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
+    EditorGUI gui(&window);
 
-    // Main loop
     bool running = true;
     SDL_Event event;
     
@@ -27,39 +28,13 @@ int main(int argc, char** argv) {
             }
         }
 
-        #ifdef _EDITOR_BUILD
-        // Start the Dear ImGui frame
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplSDL3_NewFrame();
-        ImGui::NewFrame();
-
-        // Create a sample ImGui window
-        static bool show_demo_window = true;
-        if (show_demo_window) {
-            ImGui::ShowDemoWindow(&show_demo_window);
-        }
-
-        // Custom window example
-        ImGui::Begin("Hello, ImGui!");
-        ImGui::Text("This is some useful text.");
-        if (ImGui::Button("Close Demo")) {
-            show_demo_window = false;
-        }
-        ImGui::End();
-
-        // Rendering
-        ImGui::Render();
-        
-        glViewport(0, 0, (int)window.GetIO().DisplaySize.x, (int)window.GetIO().DisplaySize.y);
-        #endif
         glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
-        
-        #ifdef _EDITOR_BUILD 
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        #endif
-        
-        //SDL_GL_SwapWindow(window);
+
+        gui.Render_ImGui_Frame([]() {
+            ImGui::ShowDemoWindow((bool*) 0);
+        });
+
         window.Update();
     }
     return 0;

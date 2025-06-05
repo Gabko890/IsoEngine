@@ -1,7 +1,5 @@
 #include <SDL3/SDL.h>
 
-#include <windows.h>
-
 #ifdef _EDITOR_BUILD
 #include <imgui.h>
 #include <imgui_impl_sdl3.h>
@@ -30,17 +28,17 @@ Window::Window(std::string title, int w, int h, SDL_WindowFlags flags)
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
     
-    window = SDL_CreateWindow(title.c_str(), w, h, SDL_WINDOW_OPENGL | flags);
-    if (!window) {
+    sdl_window = SDL_CreateWindow(title.c_str(), w, h, SDL_WINDOW_OPENGL | flags);
+    if (!sdl_window) {
         SDL_Log("Failed to create window: %s", SDL_GetError());
         SDL_Quit();
         throw std::runtime_error("Failed to create window");
     }
 
-    gl_context = SDL_GL_CreateContext(window);
+    gl_context = SDL_GL_CreateContext(sdl_window);
     if (!gl_context) {
         SDL_Log("Failed to create OpenGL context: %s", SDL_GetError());
-        SDL_DestroyWindow(window);
+        SDL_DestroyWindow(sdl_window);
         SDL_Quit();
         throw std::runtime_error("Failed to create OpenGL context");
     }
@@ -48,29 +46,18 @@ Window::Window(std::string title, int w, int h, SDL_WindowFlags flags)
     if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress)) {
         SDL_Log("Failed to initialize OpenGL context");
         SDL_GL_DestroyContext(gl_context);
-        SDL_DestroyWindow(window);
+        SDL_DestroyWindow(sdl_window);
         SDL_Quit();
         throw std::runtime_error("Failed to initialize OpenGL context");
     }
 
-#ifdef _EDITOR_BUILD
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    io = &ImGui::GetIO();
-
-    io->IniFilename = nullptr;
-    io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-    io->ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
-
-    ImGui::StyleColorsDark();
-
-    ImGui_ImplSDL3_InitForOpenGL(window, gl_context);
-    ImGui_ImplOpenGL3_Init("#version 330");
-#endif
+    w_active = true;
 }
 
 Window::~Window() {
-    Destroy();
+    SDL_GL_DestroyContext(gl_context);
+    SDL_DestroyWindow(sdl_window);
+    SDL_Quit();
 }
 
 
@@ -78,29 +65,19 @@ Window::~Window() {
  * Setters / getters
  */
 
-#ifdef _EDITOR_BUILD
-ImGuiIO& Window::GetIO() {
-    return *io;
+SDL_Window* Window::Get_SDL_Window() {
+    return sdl_window;
 }
-#endif
+
+SDL_GLContext Window::Get_GL_Context() {
+    return gl_context;
+}
 
 
 /*
  * Window managment
  */
 
-void Window::Destroy() {
-#ifdef _EDITOR_BUILD 
-    ImGui_ImplOpenGL3_Shutdown();
-    ImGui_ImplSDL3_Shutdown();
-    ImGui::DestroyContext();
-#endif
-
-    SDL_GL_DestroyContext(gl_context);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-}
-
 void Window::Update() {
-    SDL_GL_SwapWindow(window);
+    SDL_GL_SwapWindow(sdl_window);
 }
