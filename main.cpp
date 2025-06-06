@@ -7,6 +7,8 @@
 #include <imgui_impl_opengl3.h>
 #endif
 
+#include <glm/vec3.hpp>
+
 #include "Window.hpp"
 #include "EditorGUI.hpp"
 

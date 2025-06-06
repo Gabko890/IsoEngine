@@ -157,7 +157,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_EDITOR_BUILD;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

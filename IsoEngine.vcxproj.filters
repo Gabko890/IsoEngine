@@ -25,6 +25,15 @@
     <Filter Include="Source Files\Core">
       <UniqueIdentifier>{5d5a743d-9fcb-4501-accb-92224bd4bbdc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{dd24d881-9a1a-4931-92f3-c78fb21bc71a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Editor">
+      <UniqueIdentifier>{f1d289fb-2da1-4487-971d-00a9f2a06312}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Editor">
+      <UniqueIdentifier>{20faae09-4d8d-4439-97e6-5ced17f662d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -54,19 +63,19 @@
     <ClCompile Include="external\ImGui\src\imgui_demo.cpp">
       <Filter>Source Files\external\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="Window.hpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Window.hpp">
+      <Filter>Header Files\Core</Filter>
+    </ClCompile>
     <ClCompile Include="EditorGUI.cpp">
-      <Filter>Source Files\Core</Filter>
+      <Filter>Source Files\Core\Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorGUI.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Core\Editor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
