@@ -11,7 +11,7 @@
 #include "EditorGUI.hpp"
 
 int main(int argc, char** argv) {
-    Window window("SDL3 w openGL", 800, 600, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
+    Window window("ISO Engine Editor", 800, 600, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
     EditorGUI gui(&window);
 
     bool running = true;

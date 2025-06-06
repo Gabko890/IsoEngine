@@ -14,7 +14,6 @@ private:
 	SDL_Window* sdl_window = NULL;
 	SDL_GLContext gl_context = (SDL_GLContext) 0;
 
-	bool w_active = false;
 
 public: 
 	Window(std::string title, int w, int h, SDL_WindowFlags flags);

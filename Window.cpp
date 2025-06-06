@@ -50,8 +50,6 @@ Window::Window(std::string title, int w, int h, SDL_WindowFlags flags)
         SDL_Quit();
         throw std::runtime_error("Failed to initialize OpenGL context");
     }
-
-    w_active = true;
 }
 
 Window::~Window() {
