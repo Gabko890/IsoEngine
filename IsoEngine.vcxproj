@@ -142,7 +142,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,7 +157,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_EDITOR_BUILD;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -174,7 +174,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -195,6 +195,7 @@
     <ClCompile Include="external\ImGui\src\imgui_impl_sdl3.cpp" />
     <ClCompile Include="external\ImGui\src\imgui_tables.cpp" />
     <ClCompile Include="external\ImGui\src\imgui_widgets.cpp" />
+    <ClCompile Include="external\tinygltf-2.9.6\tiny_gltf.cc" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Window.hpp" />

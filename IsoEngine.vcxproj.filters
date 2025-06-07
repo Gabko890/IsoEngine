@@ -34,6 +34,9 @@
     <Filter Include="Source Files\Core\Editor">
       <UniqueIdentifier>{20faae09-4d8d-4439-97e6-5ced17f662d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\external\tinygltf">
+      <UniqueIdentifier>{93a80d61-73e7-42cf-b217-6934d0049511}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -71,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="EditorGUI.cpp">
       <Filter>Source Files\Core\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="external\tinygltf-2.9.6\tiny_gltf.cc">
+      <Filter>Source Files\external\tinygltf</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
