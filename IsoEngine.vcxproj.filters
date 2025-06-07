@@ -78,10 +78,16 @@
     <ClCompile Include="external\tinygltf-2.9.6\tiny_gltf.cc">
       <Filter>Source Files\external\tinygltf</Filter>
     </ClCompile>
+    <ClCompile Include="GLTFLoader.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorGUI.hpp">
       <Filter>Header Files\Core\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="GLTFLoader.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

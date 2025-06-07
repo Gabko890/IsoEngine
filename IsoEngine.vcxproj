@@ -196,12 +196,14 @@
     <ClCompile Include="external\ImGui\src\imgui_tables.cpp" />
     <ClCompile Include="external\ImGui\src\imgui_widgets.cpp" />
     <ClCompile Include="external\tinygltf-2.9.6\tiny_gltf.cc" />
+    <ClCompile Include="GLTFLoader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Window.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorGUI.hpp" />
+    <ClInclude Include="GLTFLoader.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

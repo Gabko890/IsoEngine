@@ -13,6 +13,7 @@
 
 #include "Window.hpp"
 #include "EditorGUI.hpp"
+#include "GLTFLoader.hpp"
 
 GLuint CompileShader(GLenum type, const char* source) {
     GLuint shader = glCreateShader(type);
@@ -57,114 +58,97 @@ GLuint CreateShaderProgram(const char* vertexSrc, const char* fragmentSrc) {
 }
 
 int main(int argc, char** argv) {
-    Window window("ISO Engine Editor", 800, 600, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
+    Window window("ISO Engine Editor", 1920, 1080, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
     EditorGUI gui(&window);
 
-    bool running = true;
-    SDL_Event event;
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 
-    float vertices[] = {
-        // Triangle 1
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-         0.5f,  0.5f, 0.0f,
-
-         // Triangle 2
-         -0.5f, -0.5f, 0.0f,
-          0.5f,  0.5f, 0.0f,
-         -0.5f,  0.5f, 0.0f
-    };
+    GLTFLoader loader;
+    if (!loader.LoadModel("C:/Users/gabri/Downloads/monk_character.glb")) {
+        SDL_Log("Failed to load model");
+        return -1;
+    }
 
     const char* vertexShaderSource = R"(
         #version 330 core
-
         layout (location = 0) in vec3 aPos;
-
         uniform mat4 model;
-
+        uniform mat4 view;
+        uniform mat4 projection;
         void main() {
-            gl_Position = model * vec4(aPos, 1.0);
+            gl_Position = projection * view * model * vec4(aPos, 1.0);
         }
     )";
 
     const char* fragmentShaderSource = R"(
         #version 330 core
-
         out vec4 FragColor;
-
         void main() {
-            FragColor = vec4(1.0, 0.7, 0.2, 1.0); // orange color
+            FragColor = vec4(1.0, 0.7, 0.2, 1.0);
         }
     )";
 
-
-    GLuint VBO, VAO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-
-    // Bind VAO first, then VBO
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    // Vertex attribute: location = 0
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    // Unbind
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindVertexArray(0);
-
     GLuint shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
+
+    glm::mat4 projection = glm::perspective(45.0, 1920.0 / 1080.0, 0.1, 100.0);
+    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, -1.5f, -4.0f));
+    glm::mat4 modelMat = glm::mat4(1.0f);
+
+    float anglex = 0.0f, angley = 0.0f, anglez = 0.0f;
+
+    bool running = true;
+    SDL_Event event;
 
     while (running) {
         while (SDL_PollEvent(&event)) {
-            #ifdef _EDITOR_BUILD 
+#ifdef _EDITOR_BUILD
             ImGui_ImplSDL3_ProcessEvent(&event);
-            #endif
-
+#endif
             if (event.type == SDL_EVENT_QUIT) {
                 running = false;
             }
         }
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
-        //glClear(GL_COLOR_BUFFER_BIT);
-
-        static float anglex = 0;
-        static float angley = 0;
-        static float anglez = 0;
-
+        glEnable(GL_DEPTH_TEST);
         glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
 
-        float time = (float)SDL_GetTicks() / 1000.0f;
-        glm::mat4 modelx = glm::rotate(glm::mat4(1.0f), anglex, glm::vec3(1.0f, 0.0f, 0.0f));
-        glm::mat4 modely = glm::rotate(modelx, angley, glm::vec3(0.0f, 1.0f, 0.0f));
-        glm::mat4 modelz = glm::rotate(modely, anglez, glm::vec3(0.0f, 0.0f, 1.0f));
+        modelMat = glm::rotate(glm::mat4(1.0f), anglex, glm::vec3(1, 0, 0));
+        modelMat = glm::rotate(modelMat, angley, glm::vec3(0, 1, 0));
+        modelMat = glm::rotate(modelMat, anglez, glm::vec3(0, 0, 1));
+
         GLint modelLoc = glGetUniformLocation(shaderProgram, "model");
+        GLint viewLoc = glGetUniformLocation(shaderProgram, "view");
+        GLint projLoc = glGetUniformLocation(shaderProgram, "projection");
 
-        //glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelz));
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelz));
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMat));
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-        glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        for (const auto& prim : loader.GetPrimitives()) {
+            glBindVertexArray(prim.vao);
+            if (prim.ebo != 0)
+                glDrawElements(GL_TRIANGLES, (GLsizei)prim.indexCount, GL_UNSIGNED_INT, nullptr);
+            else
+                glDrawArrays(GL_TRIANGLES, 0, (GLsizei)prim.indexCount);
+        }
+        glBindVertexArray(0);
 
-        
-        gui.Render_ImGui_Frame([]() {
-            //    ImGui::ShowDemoWindow((bool*) 0);
+        gui.Render_ImGui_Frame([&]() {
             ImGui::Begin("Rotation");
-            ImGui::Text("Rotation:");
-            ImGui::SliderAngle("x:", &anglex, 0.0f);
-            ImGui::SliderAngle("y:", &angley, 0.0f);
-            ImGui::SliderAngle("z:", &anglez, 0.0f);
+            ImGui::SliderAngle("X", &anglex, 0.f, 360.f);
+            ImGui::SliderAngle("Y", &angley, 0.f, 360.f);
+            ImGui::SliderAngle("Z", &anglez, 0.f, 360.f);
             ImGui::End();
         });
 
         window.Update();
     }
+
     return 0;
 }

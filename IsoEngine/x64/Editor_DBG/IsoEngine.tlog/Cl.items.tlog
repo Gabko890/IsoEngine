@@ -8,6 +8,7 @@ C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImGui\src\imgui_impl_sdl3.cpp
 C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImGui\src\imgui_tables.cpp;C:\Users\gabri\Desktop\Code\git\IsoEngine\IsoEngine\x64\Editor_DBG\imgui_tables.obj
 C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImGui\src\imgui_widgets.cpp;C:\Users\gabri\Desktop\Code\git\IsoEngine\IsoEngine\x64\Editor_DBG\imgui_widgets.obj
 C:\Users\gabri\Desktop\Code\git\IsoEngine\external\tinygltf-2.9.6\tiny_gltf.cc;C:\Users\gabri\Desktop\Code\git\IsoEngine\IsoEngine\x64\Editor_DBG\tiny_gltf.obj
+C:\Users\gabri\Desktop\Code\git\IsoEngine\GLTFLoader.cpp;C:\Users\gabri\Desktop\Code\git\IsoEngine\IsoEngine\x64\Editor_DBG\GLTFLoader.obj
 C:\Users\gabri\Desktop\Code\git\IsoEngine\main.cpp;C:\Users\gabri\Desktop\Code\git\IsoEngine\IsoEngine\x64\Editor_DBG\main.obj
 C:\Users\gabri\Desktop\Code\git\IsoEngine\Window.cpp;C:\Users\gabri\Desktop\Code\git\IsoEngine\IsoEngine\x64\Editor_DBG\Window.obj
 C:\Users\gabri\Desktop\Code\git\IsoEngine\Window.hpp;C:\Users\gabri\Desktop\Code\git\IsoEngine\IsoEngine\x64\Editor_DBG\Window.obj
