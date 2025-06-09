@@ -37,6 +37,9 @@
     <Filter Include="Source Files\external\tinygltf">
       <UniqueIdentifier>{93a80d61-73e7-42cf-b217-6934d0049511}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Utils">
+      <UniqueIdentifier>{7e9cef58-4fdc-4860-8aeb-3df267cb496d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -81,12 +84,18 @@
     <ClCompile Include="GLTFLoader.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Util_path.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorGUI.hpp">
       <Filter>Header Files\Core\Editor</Filter>
     </ClInclude>
     <ClInclude Include="GLTFLoader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

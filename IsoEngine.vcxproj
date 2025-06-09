@@ -198,12 +198,14 @@
     <ClCompile Include="external\tinygltf-2.9.6\tiny_gltf.cc" />
     <ClCompile Include="GLTFLoader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Util_path.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Window.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorGUI.hpp" />
     <ClInclude Include="GLTFLoader.hpp" />
+    <ClInclude Include="Utils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,6 +15,8 @@
 #include "EditorGUI.hpp"
 #include "GLTFLoader.hpp"
 
+#include "Utils.hpp"
+
 GLuint CompileShader(GLenum type, const char* source) {
     GLuint shader = glCreateShader(type);
     glShaderSource(shader, 1, &source, nullptr);
@@ -108,7 +110,7 @@ int main(int argc, char** argv) {
     glCullFace(GL_BACK);
 
     GLTFLoader loader;
-    if (!loader.LoadModel("C:/Users/gabri/Downloads/monk_character.glb")) {
+    if (!loader.LoadModel(Utils::GetFullPath("../../assets/example_objects/monk_character.glb"))) {
         SDL_Log("Failed to load model");
         return -1;
     }
