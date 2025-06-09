@@ -1,6 +1,0 @@
-﻿  tiny_gltf.cc
-  main.cpp
-C:\Users\gabri\Desktop\Code\git\IsoEngine\main.cpp(10,10): error C1083: Cannot open include file: 'glm/glm.hpp': No such file or directory
-  Window.cpp
-  Window.hpp
-  Generating Code...

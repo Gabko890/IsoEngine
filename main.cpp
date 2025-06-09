@@ -20,7 +20,6 @@ GLuint CompileShader(GLenum type, const char* source) {
     glShaderSource(shader, 1, &source, nullptr);
     glCompileShader(shader);
 
-    // Check for errors
     GLint success;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (!success) {
@@ -41,7 +40,6 @@ GLuint CreateShaderProgram(const char* vertexSrc, const char* fragmentSrc) {
     glAttachShader(program, fragmentShader);
     glLinkProgram(program);
 
-    // Check for linking errors
     GLint success;
     glGetProgramiv(program, GL_LINK_STATUS, &success);
     if (!success) {
@@ -50,12 +48,56 @@ GLuint CreateShaderProgram(const char* vertexSrc, const char* fragmentSrc) {
         SDL_Log("Shader linking failed:\n%s", infoLog);
     }
 
-    // Delete shaders (they're linked now)
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 
     return program;
 }
+
+const char* vertexShaderSource = R"(
+    #version 330 core
+    layout (location = 0) in vec3 aPos;
+    layout (location = 1) in vec3 aNormal;
+    layout (location = 2) in vec2 aUV;
+
+    out vec3 FragPos;
+    out vec3 Normal;
+    out vec2 TexCoord;
+
+    uniform mat4 model;
+    uniform mat4 view;
+    uniform mat4 projection;
+
+    void main() {
+        FragPos = vec3(model * vec4(aPos, 1.0));
+        Normal = mat3(transpose(inverse(model))) * aNormal;
+        TexCoord = aUV;
+        gl_Position = projection * view * vec4(FragPos, 1.0);
+    }
+)";
+
+const char* fragmentShaderSource = R"(
+    #version 330 core
+    in vec3 FragPos;
+    in vec3 Normal;
+    in vec2 TexCoord;
+
+    out vec4 FragColor;
+
+    uniform sampler2D baseColorTexture;
+    uniform vec3 lightPos;
+    uniform vec3 lightColor;
+
+    void main() {
+        vec3 norm = normalize(Normal);
+        vec3 lightDir = normalize(lightPos - FragPos);
+        float diff = max(dot(norm, lightDir), 0.0);
+        vec3 light = diff * lightColor;
+
+        vec4 texColor = texture(baseColorTexture, TexCoord);
+        FragColor = vec4(texColor.rgb * light, texColor.a);
+    }
+)";
 
 int main(int argc, char** argv) {
     Window window("ISO Engine Editor", 1920, 1080, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
@@ -71,32 +113,18 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    const char* vertexShaderSource = R"(
-        #version 330 core
-        layout (location = 0) in vec3 aPos;
-        uniform mat4 model;
-        uniform mat4 view;
-        uniform mat4 projection;
-        void main() {
-            gl_Position = projection * view * model * vec4(aPos, 1.0);
-        }
-    )";
-
-    const char* fragmentShaderSource = R"(
-        #version 330 core
-        out vec4 FragColor;
-        void main() {
-            FragColor = vec4(1.0, 0.7, 0.2, 1.0);
-        }
-    )";
-
     GLuint shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
 
-    glm::mat4 projection = glm::perspective(45.0, 1920.0 / 1080.0, 0.1, 100.0);
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
     glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, -1.5f, -4.0f));
     glm::mat4 modelMat = glm::mat4(1.0f);
 
     float anglex = 0.0f, angley = 0.0f, anglez = 0.0f;
+
+    // Light config
+    glm::vec3 lightPos(0.0f, 2.0f, 2.0f);
+    glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
+    glm::vec3 lightRotation(0.0f); // Optional for directional lights
 
     bool running = true;
     SDL_Event event;
@@ -110,10 +138,8 @@ int main(int argc, char** argv) {
                 running = false;
             }
         }
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glEnable(GL_DEPTH_TEST);
-        glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
@@ -125,19 +151,40 @@ int main(int argc, char** argv) {
         GLint modelLoc = glGetUniformLocation(shaderProgram, "model");
         GLint viewLoc = glGetUniformLocation(shaderProgram, "view");
         GLint projLoc = glGetUniformLocation(shaderProgram, "projection");
+        GLint lightPosLoc = glGetUniformLocation(shaderProgram, "lightPos");
+        GLint lightColorLoc = glGetUniformLocation(shaderProgram, "lightColor");
 
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMat));
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
+        glUniform3fv(lightPosLoc, 1, glm::value_ptr(lightPos));
+        glUniform3fv(lightColorLoc, 1, glm::value_ptr(lightColor));
+
         for (const auto& prim : loader.GetPrimitives()) {
             glBindVertexArray(prim.vao);
+            if (prim.texture) {
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_2D, prim.texture);
+                glUniform1i(glGetUniformLocation(shaderProgram, "baseColorTexture"), 0);
+            }
             if (prim.ebo != 0)
                 glDrawElements(GL_TRIANGLES, (GLsizei)prim.indexCount, GL_UNSIGNED_INT, nullptr);
             else
                 glDrawArrays(GL_TRIANGLES, 0, (GLsizei)prim.indexCount);
         }
-        glBindVertexArray(0);
+
+        // Draw light marker
+        glUseProgram(0); // Use fixed function pipeline
+        glPointSize(10.0f);
+        glMatrixMode(GL_PROJECTION);
+        glLoadMatrixf(glm::value_ptr(projection));
+        glMatrixMode(GL_MODELVIEW);
+        glLoadMatrixf(glm::value_ptr(view));
+        glBegin(GL_POINTS);
+        glColor3f(1.0f, 1.0f, 0.0f); // Yellow dot
+        glVertex3f(lightPos.x, lightPos.y, lightPos.z);
+        glEnd();
 
         gui.Render_ImGui_Frame([&]() {
             ImGui::Begin("Rotation");
@@ -145,7 +192,13 @@ int main(int argc, char** argv) {
             ImGui::SliderAngle("Y", &angley, 0.f, 360.f);
             ImGui::SliderAngle("Z", &anglez, 0.f, 360.f);
             ImGui::End();
-        });
+
+            ImGui::Begin("Light");
+            ImGui::SliderFloat3("Position", glm::value_ptr(lightPos), -10.0f, 10.0f);
+            ImGui::ColorEdit3("Color", glm::value_ptr(lightColor));
+            ImGui::SliderFloat3("Rotation", glm::value_ptr(lightRotation), -180.0f, 180.0f);
+            ImGui::End();
+            });
 
         window.Update();
     }

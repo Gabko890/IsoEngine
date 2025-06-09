@@ -10,6 +10,7 @@ struct MeshPrimitive {
     unsigned int vao;
     unsigned int vbo, ebo;
     size_t indexCount;
+    GLuint texture = 0;
     // material ID, transform
 };
 
