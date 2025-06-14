@@ -1,11 +1,9 @@
 #include <SDL3/SDL.h>
 #include <glad/glad.h>
 
-#ifdef _EDITOR_BUILD
 #include <imgui.h>
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_opengl3.h>
-#endif
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -14,6 +12,8 @@
 #include "Window.hpp"
 #include "EditorGUI.hpp"
 #include "GLTFLoader.hpp"
+
+#include "Camera.hpp"
 
 #include "Utils.hpp"
 
@@ -117,27 +117,42 @@ int main(int argc, char** argv) {
 
     GLuint shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
 
+    FPSCamera camera(glm::vec3(0.0f, 0.0f, 5.0f));
+
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
-    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, -1.5f, -4.0f));
-    glm::mat4 modelMat = glm::mat4(1.0f);
+    glm::mat4 view = camera.GetViewMatrix();//glm::translate(glm::mat4(1.0f), glm::vec3(0, -1.5f, -4.0f));
+    glm::mat4 modelMat = glm::mat4(1.0f); 
 
     float anglex = 0.0f, angley = 0.0f, anglez = 0.0f;
 
-    // Light config
+    // light
     glm::vec3 lightPos(0.0f, 2.0f, 2.0f);
     glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
-    glm::vec3 lightRotation(0.0f); // Optional for directional lights
+    glm::vec3 lightRotation(0.0f); // directional light
 
     bool running = true;
     SDL_Event event;
 
     while (running) {
         while (SDL_PollEvent(&event)) {
-#ifdef _EDITOR_BUILD
             ImGui_ImplSDL3_ProcessEvent(&event);
-#endif
             if (event.type == SDL_EVENT_QUIT) {
                 running = false;
+            }
+
+            switch (event.key.key) {
+            case 'w':
+                camera.MoveForward(0.002f, 10.0f);
+                break;
+            case 's':
+                camera.MoveForward(0.002f, -10.0f);
+                break;
+            case 'd':
+                camera.MoveRight(0.002f, 10.0f);
+                break;
+            case 'a':
+                camera.MoveRight(0.002f, -10.0f);
+                break;
             }
         }
 
@@ -157,7 +172,7 @@ int main(int argc, char** argv) {
         GLint lightColorLoc = glGetUniformLocation(shaderProgram, "lightColor");
 
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMat));
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera.GetViewMatrix()));
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
         glUniform3fv(lightPosLoc, 1, glm::value_ptr(lightPos));
@@ -176,18 +191,6 @@ int main(int argc, char** argv) {
                 glDrawArrays(GL_TRIANGLES, 0, (GLsizei)prim.indexCount);
         }
 
-        // Draw light marker
-        glUseProgram(0); // Use fixed function pipeline
-        glPointSize(10.0f);
-        glMatrixMode(GL_PROJECTION);
-        glLoadMatrixf(glm::value_ptr(projection));
-        glMatrixMode(GL_MODELVIEW);
-        glLoadMatrixf(glm::value_ptr(view));
-        glBegin(GL_POINTS);
-        glColor3f(1.0f, 1.0f, 0.0f); // Yellow dot
-        glVertex3f(lightPos.x, lightPos.y, lightPos.z);
-        glEnd();
-
         gui.Render_ImGui_Frame([&]() {
             ImGui::Begin("Rotation");
             ImGui::SliderAngle("X", &anglex, 0.f, 360.f);
@@ -200,7 +203,7 @@ int main(int argc, char** argv) {
             ImGui::ColorEdit3("Color", glm::value_ptr(lightColor));
             ImGui::SliderFloat3("Rotation", glm::value_ptr(lightRotation), -180.0f, 180.0f);
             ImGui::End();
-            });
+        });
 
         window.Update();
     }

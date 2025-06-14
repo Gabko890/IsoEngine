@@ -40,6 +40,12 @@
     <Filter Include="Source Files\Utils">
       <UniqueIdentifier>{7e9cef58-4fdc-4860-8aeb-3df267cb496d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Core\Camera">
+      <UniqueIdentifier>{6ef9ce42-0a07-4f35-8e5d-7526dc62a984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Editor\Camera">
+      <UniqueIdentifier>{bb3e7e67-3616-41fc-9fb5-331db5242029}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -87,16 +93,31 @@
     <ClCompile Include="Util_path.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="FPSCamera.cpp">
+      <Filter>Source Files\Core\Editor\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetCamera.cpp">
+      <Filter>Source Files\Core\Editor\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorGUI.hpp">
       <Filter>Header Files\Core\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="GLTFLoader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.hpp">
+      <Filter>Header Files\Core\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSCamera.hpp">
+      <Filter>Header Files\Core\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetCamera.hpp">
+      <Filter>Header Files\Core\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GLTFLoader.hpp">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

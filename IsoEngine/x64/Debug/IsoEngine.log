@@ -1,0 +1,7 @@
+﻿IsoEngine\x64\Debug\Window.obj : warning LNK4042: object specified more than once; extras ignored
+EditorGUI.obj : error LNK2019: unresolved external symbol "public: struct SDL_Window * __cdecl Window::Get_SDL_Window(void)" (?Get_SDL_Window@Window@@QEAAPEAUSDL_Window@@XZ) referenced in function "public: __cdecl EditorGUI::EditorGUI(class Window *)" (??0EditorGUI@@QEAA@PEAVWindow@@@Z)
+EditorGUI.obj : error LNK2019: unresolved external symbol "public: struct SDL_GLContextState * __cdecl Window::Get_GL_Context(void)" (?Get_GL_Context@Window@@QEAAPEAUSDL_GLContextState@@XZ) referenced in function "public: __cdecl EditorGUI::EditorGUI(class Window *)" (??0EditorGUI@@QEAA@PEAVWindow@@@Z)
+main.obj : error LNK2019: unresolved external symbol "public: __cdecl Window::Window(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,int,int,unsigned __int64)" (??0Window@@QEAA@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HH_K@Z) referenced in function main
+main.obj : error LNK2019: unresolved external symbol "public: __cdecl Window::~Window(void)" (??1Window@@QEAA@XZ) referenced in function main
+main.obj : error LNK2019: unresolved external symbol "public: void __cdecl Window::Update(void)" (?Update@Window@@QEAAXXZ) referenced in function main
+C:\Users\gabri\Desktop\Coda\git\kokotmikrosoft\IsoEngine\x64\Debug\IsoEngine.exe : fatal error LNK1120: 5 unresolved externals
