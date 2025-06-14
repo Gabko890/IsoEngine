@@ -1,2 +1,21 @@
-﻿  main.cpp
-  IsoEngine.vcxproj -> C:\Users\gabri\Desktop\Coda\git\kokotmikrosoft\IsoEngine\x64\Editor_DBG\IsoEngine.exe
+﻿  EditorGUI.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_opengl3.cpp
+  imgui_impl_sdl3.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  tiny_gltf.cc
+  FPSCamera.cpp
+  GLTFLoader.cpp
+  main.cpp
+  TargetCamera.cpp
+  Util_path.cpp
+  Window.cpp
+  Window.hpp
+  Generating Code...
+  glad.c
+  LINK : C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\x64\Editor_DBG\IsoEngine.exe not found or not built by the last incremental link; performing full link
+IsoEngine\x64\Editor_DBG\Window.obj : warning LNK4042: object specified more than once; extras ignored
+  IsoEngine.vcxproj -> C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\x64\Editor_DBG\IsoEngine.exe

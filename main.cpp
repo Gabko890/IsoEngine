@@ -1,4 +1,6 @@
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_mouse.h>
+
 #include <glad/glad.h>
 
 #include <imgui.h>
@@ -105,6 +107,8 @@ int main(int argc, char** argv) {
     Window window("ISO Engine Editor", 1920, 1080, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
     EditorGUI gui(&window);
 
+    SDL_HideCursor();
+
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
@@ -153,6 +157,19 @@ int main(int argc, char** argv) {
             case 'a':
                 camera.MoveRight(0.002f, -10.0f);
                 break;
+            case 'c':
+                SDL_HideCursor();
+                break;
+            }
+
+            static bool move_togle = false;
+
+            if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)  move_togle = true;
+            else if (event.type == SDL_EVENT_MOUSE_BUTTON_UP)  move_togle = false;
+
+            else if (event.type == SDL_EVENT_MOUSE_MOTION) {
+                if (move_togle)
+                    camera.Rotate(-event.motion.yrel * 0.1f, event.motion.xrel * 0.1f);
             }
         }
 
