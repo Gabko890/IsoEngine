@@ -107,6 +107,11 @@ int main(int argc, char** argv) {
     Window window("ISO Engine Editor", 1920, 1080, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
     EditorGUI gui(&window);
 
+    SDL_GL_SetSwapInterval(-1); // adaptive Vsync
+
+    static float dtime = 0;
+    static Uint64 ltime = SDL_GetTicks();
+
     SDL_HideCursor();
 
     glEnable(GL_DEPTH_TEST);
@@ -124,48 +129,38 @@ int main(int argc, char** argv) {
     FPSCamera camera(glm::vec3(0.0f, 0.0f, 5.0f));
 
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
-    glm::mat4 view = camera.GetViewMatrix();//glm::translate(glm::mat4(1.0f), glm::vec3(0, -1.5f, -4.0f));
-    glm::mat4 modelMat = glm::mat4(1.0f); 
 
+    glm::vec3 modelPosition(0.0f, 0.0f, 0.0f);
     float anglex = 0.0f, angley = 0.0f, anglez = 0.0f;
 
-    // light
     glm::vec3 lightPos(0.0f, 2.0f, 2.0f);
     glm::vec3 lightColor(1.0f, 1.0f, 1.0f);
-    glm::vec3 lightRotation(0.0f); // directional light
+    glm::vec3 lightRotation(0.0f);
 
     bool running = true;
     SDL_Event event;
 
     while (running) {
+        Uint64 currentTime = SDL_GetTicks();
+        dtime = (currentTime - ltime) / 1000.0f;
+        ltime = currentTime;
+        
+        const Uint8* keystate = (Uint8*)SDL_GetKeyboardState(NULL);
+        if (keystate[SDL_SCANCODE_W]) camera.MoveForward(dtime, 5.0f);
+        if (keystate[SDL_SCANCODE_S]) camera.MoveForward(dtime, -5.0f);
+        if (keystate[SDL_SCANCODE_D]) camera.MoveRight(dtime, 5.0f);
+        if (keystate[SDL_SCANCODE_A]) camera.MoveRight(dtime, -5.0f);
+
         while (SDL_PollEvent(&event)) {
             ImGui_ImplSDL3_ProcessEvent(&event);
             if (event.type == SDL_EVENT_QUIT) {
                 running = false;
             }
 
-            switch (event.key.key) {
-            case 'w':
-                camera.MoveForward(0.002f, 10.0f);
-                break;
-            case 's':
-                camera.MoveForward(0.002f, -10.0f);
-                break;
-            case 'd':
-                camera.MoveRight(0.002f, 10.0f);
-                break;
-            case 'a':
-                camera.MoveRight(0.002f, -10.0f);
-                break;
-            case 'c':
-                SDL_HideCursor();
-                break;
-            }
-
             static bool move_togle = false;
 
-            if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN)  move_togle = true;
-            else if (event.type == SDL_EVENT_MOUSE_BUTTON_UP)  move_togle = false;
+            if (event.type == SDL_EVENT_MOUSE_BUTTON_DOWN && event.button.button == SDL_BUTTON_RIGHT)  move_togle = true;
+            else if (event.type == SDL_EVENT_MOUSE_BUTTON_UP && event.button.button == SDL_BUTTON_RIGHT)  move_togle = false;
 
             else if (event.type == SDL_EVENT_MOUSE_MOTION) {
                 if (move_togle)
@@ -173,12 +168,14 @@ int main(int argc, char** argv) {
             }
         }
 
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(130 / 255.0, 200 / 255.0, 229 / 255.0, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(shaderProgram);
 
-        modelMat = glm::rotate(glm::mat4(1.0f), anglex, glm::vec3(1, 0, 0));
+        glm::mat4 modelMat = glm::mat4(1.0f);
+        modelMat = glm::translate(modelMat, modelPosition);
+        modelMat = glm::rotate(modelMat, anglex, glm::vec3(1, 0, 0));
         modelMat = glm::rotate(modelMat, angley, glm::vec3(0, 1, 0));
         modelMat = glm::rotate(modelMat, anglez, glm::vec3(0, 0, 1));
 
@@ -209,18 +206,19 @@ int main(int argc, char** argv) {
         }
 
         gui.Render_ImGui_Frame([&]() {
-            ImGui::Begin("Rotation");
-            ImGui::SliderAngle("X", &anglex, 0.f, 360.f);
-            ImGui::SliderAngle("Y", &angley, 0.f, 360.f);
-            ImGui::SliderAngle("Z", &anglez, 0.f, 360.f);
+            ImGui::Begin("Transform");
+            ImGui::SliderFloat3("Position", glm::value_ptr(modelPosition), -10.0f, 10.0f);
+            ImGui::SliderAngle("Rotation X", &anglex, 0.f, 360.f);
+            ImGui::SliderAngle("Rotation Y", &angley, 0.f, 360.f);
+            ImGui::SliderAngle("Rotation Z", &anglez, 0.f, 360.f);
             ImGui::End();
 
             ImGui::Begin("Light");
-            ImGui::SliderFloat3("Position", glm::value_ptr(lightPos), -10.0f, 10.0f);
+            ImGui::SliderFloat3("Position", glm::value_ptr(lightPos), -5.0f, 5.0f);
             ImGui::ColorEdit3("Color", glm::value_ptr(lightColor));
             ImGui::SliderFloat3("Rotation", glm::value_ptr(lightRotation), -180.0f, 180.0f);
             ImGui::End();
-        });
+            });
 
         window.Update();
     }
