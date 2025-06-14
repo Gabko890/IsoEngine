@@ -43,7 +43,7 @@
     <Filter Include="Header Files\Core\Camera">
       <UniqueIdentifier>{6ef9ce42-0a07-4f35-8e5d-7526dc62a984}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Core\Editor\Camera">
+    <Filter Include="Source Files\Core\Camera">
       <UniqueIdentifier>{bb3e7e67-3616-41fc-9fb5-331db5242029}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -94,10 +94,10 @@
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
     <ClCompile Include="FPSCamera.cpp">
-      <Filter>Source Files\Core\Editor\Camera</Filter>
+      <Filter>Source Files\Core\Camera</Filter>
     </ClCompile>
     <ClCompile Include="TargetCamera.cpp">
-      <Filter>Source Files\Core\Editor\Camera</Filter>
+      <Filter>Source Files\Core\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
