@@ -1,28 +1,18 @@
 #pragma once
 
+#include <string>
+#include <vector>
 #include <tiny_gltf.h>
 #include <glm/glm.hpp>
 
-#include <string>
-#include <vector>
-
-struct MeshPrimitive {
-    unsigned int vao;
-    unsigned int vbo, ebo;
-    size_t indexCount;
-    GLuint texture = 0;
-    // material ID, transform
-};
+#include "ModelInstance.hpp"
 
 class GLTFLoader {
-private:
-    tinygltf::Model model;
-    std::vector<MeshPrimitive> primitives;
-
 public:
-    GLTFLoader();
-    ~GLTFLoader();
-
     bool LoadModel(const std::string& path);
-    const std::vector<MeshPrimitive>& GetPrimitives() const;
+    const std::vector<ModelInstance>& GetInstances() const;
+
+private:
+    bool LoadPrimitive(const tinygltf::Model& model, const tinygltf::Primitive& primitive, MeshPrimitive& meshPrim);
+    std::vector<ModelInstance> instances;
 };

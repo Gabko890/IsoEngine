@@ -46,6 +46,12 @@
     <Filter Include="Source Files\Core\Camera">
       <UniqueIdentifier>{bb3e7e67-3616-41fc-9fb5-331db5242029}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Core\Resources">
+      <UniqueIdentifier>{9e5105b9-76d1-4f23-8c1e-5efa905e4a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Resources">
+      <UniqueIdentifier>{5cbaf60f-e4d7-43d9-bbe5-f45c85f5f62c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -87,9 +93,6 @@
     <ClCompile Include="external\tinygltf-2.9.6\tiny_gltf.cc">
       <Filter>Source Files\external\tinygltf</Filter>
     </ClCompile>
-    <ClCompile Include="GLTFLoader.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Util_path.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
@@ -98,6 +101,12 @@
     </ClCompile>
     <ClCompile Include="TargetCamera.cpp">
       <Filter>Source Files\Core\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="GLTFLoader.cpp">
+      <Filter>Source Files\Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Source Files\Core\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,7 +126,16 @@
       <Filter>Header Files\Core\Camera</Filter>
     </ClInclude>
     <ClInclude Include="GLTFLoader.hpp">
-      <Filter>Header Files\Core</Filter>
+      <Filter>Header Files\Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshPrimitive.hpp">
+      <Filter>Header Files\Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelInstance.hpp">
+      <Filter>Header Files\Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

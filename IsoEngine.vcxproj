@@ -143,6 +143,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -158,6 +159,7 @@
       <PreprocessorDefinitions>_EDITOR_BUILD;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -175,6 +177,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -199,6 +202,7 @@
     <ClCompile Include="FPSCamera.cpp" />
     <ClCompile Include="GLTFLoader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="TargetCamera.cpp" />
     <ClCompile Include="Util_path.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -209,6 +213,9 @@
     <ClInclude Include="EditorGUI.hpp" />
     <ClInclude Include="FPSCamera.hpp" />
     <ClInclude Include="GLTFLoader.hpp" />
+    <ClInclude Include="MeshPrimitive.hpp" />
+    <ClInclude Include="ModelInstance.hpp" />
+    <ClInclude Include="ResourceManager.hpp" />
     <ClInclude Include="TargetCamera.hpp" />
     <ClInclude Include="Utils.hpp" />
   </ItemGroup>
