@@ -52,6 +52,12 @@
     <Filter Include="Source Files\Core\Resources">
       <UniqueIdentifier>{5cbaf60f-e4d7-43d9-bbe5-f45c85f5f62c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Core\Shaders">
+      <UniqueIdentifier>{a4faabf3-2e54-42ac-babf-f018e0242782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core\Shaders">
+      <UniqueIdentifier>{17936c40-7227-4ebd-841a-3a8c0f22c2a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -108,6 +114,12 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Source Files\Core\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\Core\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorGUI.hpp">
@@ -135,6 +147,12 @@
       <Filter>Header Files\Core\Resources</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.hpp">
+      <Filter>Header Files\Core\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

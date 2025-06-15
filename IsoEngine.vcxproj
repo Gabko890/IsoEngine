@@ -202,7 +202,9 @@
     <ClCompile Include="FPSCamera.cpp" />
     <ClCompile Include="GLTFLoader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="TargetCamera.cpp" />
     <ClCompile Include="Util_path.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -215,7 +217,9 @@
     <ClInclude Include="GLTFLoader.hpp" />
     <ClInclude Include="MeshPrimitive.hpp" />
     <ClInclude Include="ModelInstance.hpp" />
+    <ClInclude Include="Renderer.hpp" />
     <ClInclude Include="ResourceManager.hpp" />
+    <ClInclude Include="Shader.hpp" />
     <ClInclude Include="TargetCamera.hpp" />
     <ClInclude Include="Utils.hpp" />
   </ItemGroup>

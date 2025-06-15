@@ -16,97 +16,13 @@
 #include "GLTFLoader.hpp"
 #include "Camera.hpp"
 #include "Utils.hpp"
-
-GLuint CompileShader(GLenum type, const char* source) {
-    GLuint shader = glCreateShader(type);
-    glShaderSource(shader, 1, &source, nullptr);
-    glCompileShader(shader);
-
-    GLint success;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        char infoLog[512];
-        glGetShaderInfoLog(shader, 512, nullptr, infoLog);
-        SDL_Log("Shader compilation failed:\n%s", infoLog);
-    }
-
-    return shader;
-}
-
-GLuint CreateShaderProgram(const char* vertexSrc, const char* fragmentSrc) {
-    GLuint vertexShader = CompileShader(GL_VERTEX_SHADER, vertexSrc);
-    GLuint fragmentShader = CompileShader(GL_FRAGMENT_SHADER, fragmentSrc);
-
-    GLuint program = glCreateProgram();
-    glAttachShader(program, vertexShader);
-    glAttachShader(program, fragmentShader);
-    glLinkProgram(program);
-
-    GLint success;
-    glGetProgramiv(program, GL_LINK_STATUS, &success);
-    if (!success) {
-        char infoLog[512];
-        glGetProgramInfoLog(program, 512, nullptr, infoLog);
-        SDL_Log("Shader linking failed:\n%s", infoLog);
-    }
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-
-    return program;
-}
-
-const char* vertexShaderSource = R"(
-    #version 330 core
-    layout (location = 0) in vec3 aPos;
-    layout (location = 1) in vec3 aNormal;
-    layout (location = 2) in vec2 aUV;
-
-    out vec3 FragPos;
-    out vec3 Normal;
-    out vec2 TexCoord;
-
-    uniform mat4 model;
-    uniform mat4 view;
-    uniform mat4 projection;
-
-    void main() {
-        FragPos = vec3(model * vec4(aPos, 1.0));
-        Normal = mat3(transpose(inverse(model))) * aNormal;
-        TexCoord = aUV;
-        gl_Position = projection * view * vec4(FragPos, 1.0);
-    }
-)";
-
-const char* fragmentShaderSource = R"(
-    #version 330 core
-    in vec3 FragPos;
-    in vec3 Normal;
-    in vec2 TexCoord;
-
-    out vec4 FragColor;
-
-    uniform sampler2D baseColorTexture;
-    uniform vec3 lightPos;
-    uniform vec3 lightColor;
-
-    void main() {
-        vec3 norm = normalize(Normal);
-        vec3 lightDir = normalize(lightPos - FragPos);
-        float diff = max(dot(norm, lightDir), 0.0);
-        vec3 light = diff * lightColor;
-
-        vec4 texColor = texture(baseColorTexture, TexCoord);
-        FragColor = vec4(texColor.rgb * light, texColor.a);
-    }
-)";
+#include "Renderer.hpp"
 
 int main(int argc, char** argv) {
     Window window("ISO Engine Editor", 1920, 1080, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
     EditorGUI gui(&window);
 
-    SDL_GL_SetSwapInterval(-1); // adaptive Vsync
-
+    SDL_GL_SetSwapInterval(-1);
     float dtime = 0;
     Uint64 ltime = SDL_GetTicks();
 
@@ -116,6 +32,12 @@ int main(int argc, char** argv) {
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
 
+    Renderer renderer;
+    if (!renderer.Initialize()) {
+        SDL_Log("Failed to initialize renderer");
+        return -1;
+    }
+
     GLTFLoader loader;
     if (!loader.LoadModel(Utils::GetFullPath("../../assets/example_objects/monk_character.glb"))) {
         SDL_Log("Failed to load model");
@@ -124,10 +46,9 @@ int main(int argc, char** argv) {
 
     SDL_Log("Loaded mesh instances: %zu", loader.GetInstances().size());
 
-    GLuint shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
-
     FPSCamera camera(glm::vec3(0.0f, 0.0f, 5.0f));
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
+    renderer.SetProjectionMatrix(projection);
 
     glm::vec3 modelPosition(0.0f);
     float anglex = 0.0f, angley = 0.0f, anglez = 0.0f;
@@ -135,7 +56,6 @@ int main(int argc, char** argv) {
 
     glm::vec3 lightPos(0.0f, 2.0f, 2.0f);
     glm::vec3 lightColor(1.0f);
-    glm::vec3 lightRotation(0.0f);
 
     bool running = true;
     SDL_Event event;
@@ -168,36 +88,16 @@ int main(int argc, char** argv) {
         glClearColor(130 / 255.0f, 200 / 255.0f, 229 / 255.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glUseProgram(shaderProgram);
+        glm::mat4 modelTransform = glm::mat4(1.0f);
+        modelTransform = glm::translate(modelTransform, modelPosition);
+        modelTransform = glm::rotate(modelTransform, anglex, glm::vec3(1, 0, 0));
+        modelTransform = glm::rotate(modelTransform, angley, glm::vec3(0, 1, 0));
+        modelTransform = glm::rotate(modelTransform, anglez, glm::vec3(0, 0, 1));
+        modelTransform = glm::scale(modelTransform, glm::vec3(modelScale));
 
-        glm::mat4 guiTransform = glm::mat4(1.0f);
-        guiTransform = glm::translate(guiTransform, modelPosition);
-        guiTransform = glm::rotate(guiTransform, anglex, glm::vec3(1, 0, 0));
-        guiTransform = glm::rotate(guiTransform, angley, glm::vec3(0, 1, 0));
-        guiTransform = glm::rotate(guiTransform, anglez, glm::vec3(0, 0, 1));
-        guiTransform = glm::scale(guiTransform, glm::vec3(modelScale));
+        renderer.SetLightProperties(lightPos, lightColor);
 
-        GLint modelLoc = glGetUniformLocation(shaderProgram, "model");
-        GLint viewLoc = glGetUniformLocation(shaderProgram, "view");
-        GLint projLoc = glGetUniformLocation(shaderProgram, "projection");
-        GLint lightPosLoc = glGetUniformLocation(shaderProgram, "lightPos");
-        GLint lightColorLoc = glGetUniformLocation(shaderProgram, "lightColor");
-
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera.GetViewMatrix()));
-        glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-        glUniform3fv(lightPosLoc, 1, glm::value_ptr(lightPos));
-        glUniform3fv(lightColorLoc, 1, glm::value_ptr(lightColor));
-
-        for (const auto& inst : loader.GetInstances()) {
-            glm::mat4 finalModel = guiTransform * inst.transform;
-            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(finalModel));
-
-            if (inst.mesh->texture)
-                glBindTexture(GL_TEXTURE_2D, inst.mesh->texture);
-
-            glBindVertexArray(inst.mesh->vao);
-            glDrawElements(GL_TRIANGLES, inst.mesh->indexCount, GL_UNSIGNED_INT, 0);
-        }
+        renderer.RenderInstances(loader.GetInstances(), camera, modelTransform);
 
         gui.Render_ImGui_Frame([&]() {
             ImGui::Begin("Transform");
