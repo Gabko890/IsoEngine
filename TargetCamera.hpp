@@ -1,8 +1,9 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "ICamera.hpp"
 
-class TargetCamera {
+class TargetCamera : public ICamera {
 public:
     glm::vec3 position;
     glm::vec3 target;
@@ -10,5 +11,5 @@ public:
 
     TargetCamera(glm::vec3 pos, glm::vec3 tgt, glm::vec3 upVec = glm::vec3(0, 1, 0));
 
-    glm::mat4 GetViewMatrix() const;
+    glm::mat4 GetViewMatrix() const override;
 };

@@ -146,14 +146,17 @@
     <ClInclude Include="ModelInstance.hpp">
       <Filter>Header Files\Core\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.hpp">
       <Filter>Header Files\Core\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.hpp">
+      <Filter>Header Files\Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="ICamera.hpp">
+      <Filter>Header Files\Core\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

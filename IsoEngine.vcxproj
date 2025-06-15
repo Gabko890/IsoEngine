@@ -215,6 +215,7 @@
     <ClInclude Include="EditorGUI.hpp" />
     <ClInclude Include="FPSCamera.hpp" />
     <ClInclude Include="GLTFLoader.hpp" />
+    <ClInclude Include="ICamera.hpp" />
     <ClInclude Include="MeshPrimitive.hpp" />
     <ClInclude Include="ModelInstance.hpp" />
     <ClInclude Include="Renderer.hpp" />

@@ -1,6 +1,59 @@
-﻿  main.cpp
+﻿  EditorGUI.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_opengl3.cpp
+  imgui_impl_sdl3.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  tiny_gltf.cc
+  FPSCamera.cpp
+  GLTFLoader.cpp
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,96): warning C4244: 'argument': conversion from 'const _Ty' to 'T', possible loss of data
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,96): warning C4244:         with
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,96): warning C4244:         [
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,96): warning C4244:             _Ty=double
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,96): warning C4244:         ]
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,96): warning C4244:         and
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,96): warning C4244:         [
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,96): warning C4244:             T=float
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,96): warning C4244:         ]
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,78): warning C4244: 'argument': conversion from 'const _Ty' to 'T', possible loss of data
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,78): warning C4244:         with
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,78): warning C4244:         [
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,78): warning C4244:             _Ty=double
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,78): warning C4244:         ]
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,78): warning C4244:         and
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,78): warning C4244:         [
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,78): warning C4244:             T=float
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,78): warning C4244:         ]
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,60): warning C4244: 'argument': conversion from 'const _Ty' to 'T', possible loss of data
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,60): warning C4244:         with
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,60): warning C4244:         [
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,60): warning C4244:             _Ty=double
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,60): warning C4244:         ]
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,60): warning C4244:         and
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,60): warning C4244:         [
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,60): warning C4244:             T=float
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,60): warning C4244:         ]
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,42): warning C4244: 'argument': conversion from 'const _Ty' to 'T', possible loss of data
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,42): warning C4244:         with
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,42): warning C4244:         [
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,42): warning C4244:             _Ty=double
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,42): warning C4244:         ]
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,42): warning C4244:         and
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,42): warning C4244:         [
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,42): warning C4244:             T=float
+C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\GLTFLoader.cpp(46,42): warning C4244:         ]
+  main.cpp
   Renderer.cpp
+  ResourceManager.cpp
   Shader.cpp
+  TargetCamera.cpp
+  Util_path.cpp
+  Window.cpp
+  Window.hpp
   Generating Code...
+  glad.c
 IsoEngine\x64\Debug\Window.obj : warning LNK4042: object specified more than once; extras ignored
   IsoEngine.vcxproj -> C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\x64\Debug\IsoEngine.exe

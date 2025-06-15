@@ -27,7 +27,7 @@ void Renderer::SetLightProperties(const glm::vec3& position, const glm::vec3& co
 }
 
 void Renderer::RenderInstances(const std::vector<ModelInstance>& instances,
-    const FPSCamera& camera,
+    const ICamera& camera,
     const glm::mat4& modelTransform) {
     shader.Use();
 

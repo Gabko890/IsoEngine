@@ -1,16 +1,17 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "ICamera.hpp"
 
-class FPSCamera {
+class FPSCamera : public ICamera {
 public:
     glm::vec3 position;
     float pitch, yaw;
 
     FPSCamera(glm::vec3 startPos = { 0, 0, 3 }, float startPitch = 0.0f, float startYaw = -90.0f);
 
-    glm::mat4 GetViewMatrix() const;
-    
+    glm::mat4 GetViewMatrix() const override;
+
     void Move(const glm::vec3& delta, float speed);
 
     void MoveForward(float delta, float speed);
