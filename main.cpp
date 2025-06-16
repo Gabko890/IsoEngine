@@ -12,11 +12,14 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Window.hpp"
-#include "EditorGUI.hpp"
 #include "Scene.hpp"
 #include "Camera.hpp"
 #include "Utils.hpp"
 #include "Renderer.hpp"
+
+#include "EditorGUI.hpp"
+#include "TerminalHelper.hpp"
+
 
 int main(int argc, char** argv) {
     Window window("ISO Engine Editor", 1920, 1080, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
@@ -39,12 +42,7 @@ int main(int argc, char** argv) {
     }
 
     Scene scene;
-    if (!scene.AddObject("test_cube1", Utils::GetFullPath("../../assets/example_objects/test_cube_color.glb"))) {
-        SDL_Log("Failed to load model");
-        return -1;
-    }
-
-    if (!scene.AddObject("test_cube2", Utils::GetFullPath("../../assets/example_objects/test_cube_color.glb"))) {
+    if (!scene.AddObject("test_cube1", Utils::GetFullPath("../../assets/hrabovky_assets/donut.glb"))) {
         SDL_Log("Failed to load model");
         return -1;
     }
@@ -57,6 +55,9 @@ int main(int argc, char** argv) {
 
     glm::vec3 lightPos(0.0f, 2.0f, 2.0f);
     glm::vec3 lightColor(1.0f);
+
+    TerminalHelper terminal_helper;
+    ImTerm::terminal<TerminalHelper> term;
 
     bool running = true;
     SDL_Event event;
@@ -122,7 +123,20 @@ int main(int argc, char** argv) {
             ImGui::SliderFloat3("Position", glm::value_ptr(lightPos), -10.0f, 10.0f);
             ImGui::ColorEdit3("Color", glm::value_ptr(lightColor));
             ImGui::End();
-            });
+
+
+            ImGui::SetNextWindowPos(ImVec2(0, 1080 - 250), ImGuiCond_Always);
+            ImGui::SetNextWindowSizeConstraints(ImVec2(1920, 100), ImVec2(1920, 600));
+            ImGui::SetNextWindowSize(ImVec2(1920, 200), ImGuiCond_Always);
+            term.show();
+
+            ImGui::SetNextWindowPos(ImVec2(0, 1080 - 50), ImGuiCond_Always);
+            ImGui::SetNextWindowSize(ImVec2(1920, 50), ImGuiCond_Always);
+            ImGui::Begin(" ", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+            ImGui::Text(" ");
+            ImGui::Dummy(ImGui::GetContentRegionAvail());
+            ImGui::End();
+        });
 
         window.Update();
     }

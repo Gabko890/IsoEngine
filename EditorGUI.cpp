@@ -10,7 +10,7 @@ EditorGUI::EditorGUI(Window* window) {
     ImGui::CreateContext();
     io = &ImGui::GetIO();
 
-    io->IniFilename = nullptr;
+    io->IniFilename = "EditorConfig";
     io->ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io->ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
 

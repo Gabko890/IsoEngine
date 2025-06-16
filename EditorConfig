@@ -1,0 +1,20 @@
+[Window][Debug##Default]
+Pos=60,60
+Size=400,400
+
+[Window][Scene Objects]
+Pos=-1,0
+Size=334,831
+
+[Window][terminal]
+Pos=0,830
+Size=1920,200
+
+[Window][ ]
+Pos=0,1030
+Size=1920,50
+
+[Window][Light]
+Pos=1602,0
+Size=318,830
+

@@ -170,5 +170,8 @@
     <ClInclude Include="Scene.hpp">
       <Filter>Header Files\Core\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="TerminalHelper.hpp">
+      <Filter>Header Files\Core\Editor</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

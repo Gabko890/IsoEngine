@@ -142,7 +142,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6;$(SolutionDir)\external\ImTerm\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -158,7 +158,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_EDITOR_BUILD;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6;$(SolutionDir)\external\ImTerm\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -176,7 +176,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6;$(SolutionDir)\external\ImTerm\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -224,6 +224,7 @@
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="Shader.hpp" />
     <ClInclude Include="TargetCamera.hpp" />
+    <ClInclude Include="TerminalHelper.hpp" />
     <ClInclude Include="Utils.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
