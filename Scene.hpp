@@ -6,7 +6,7 @@
 #include <glm/glm.hpp>
 #include "ModelInstance.hpp"
 
-class ICamera;  // Forward declaration for ICamera
+class ICamera;
 class Renderer;
 
 namespace tinygltf {
