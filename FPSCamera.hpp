@@ -11,6 +11,8 @@ public:
     FPSCamera(glm::vec3 startPos = { 0, 0, 3 }, float startPitch = 0.0f, float startYaw = -90.0f);
 
     glm::mat4 GetViewMatrix() const override;
+    glm::vec3 GetPosition() const override;
+    glm::vec3 GetDirection() const override;
 
     void Move(const glm::vec3& delta, float speed);
 
@@ -21,8 +23,6 @@ public:
     void MoveUp(float delta, float speed);
 
     void Rotate(float deltaPitch, float deltaYaw);
-
-    glm::vec3 GetDirection() const;
 
     void SetPosition(const glm::vec3& newPos);
 

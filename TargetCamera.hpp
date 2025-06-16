@@ -12,4 +12,6 @@ public:
     TargetCamera(glm::vec3 pos, glm::vec3 tgt, glm::vec3 upVec = glm::vec3(0, 1, 0));
 
     glm::mat4 GetViewMatrix() const override;
+    glm::vec3 GetPosition() const override;
+    glm::vec3 GetDirection() const override;
 };

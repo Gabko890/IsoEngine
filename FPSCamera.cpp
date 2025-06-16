@@ -8,6 +8,10 @@ glm::mat4 FPSCamera::GetViewMatrix() const {
     return glm::lookAt(position, position + front, glm::vec3(0, 1, 0));
 }
 
+glm::vec3 FPSCamera::GetPosition() const {
+    return position;
+}
+
 void FPSCamera::Move(const glm::vec3& delta, float speed) {
     glm::vec3 forward = GetDirection();
     glm::vec3 right = glm::normalize(glm::cross(forward, glm::vec3(0, 1, 0)));
@@ -23,7 +27,7 @@ void FPSCamera::MoveForward(float delta, float speed) {
     position += forward * delta * speed;
 }
 
-void FPSCamera:: MoveRight(float delta, float speed) {
+void FPSCamera::MoveRight(float delta, float speed) {
     glm::vec3 right = glm::normalize(glm::cross(GetDirection(), glm::vec3(0, 1, 0)));
     position += right * delta * speed;
 }

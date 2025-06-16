@@ -120,6 +120,9 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EditorGUI.hpp">
@@ -157,6 +160,9 @@
     </ClInclude>
     <ClInclude Include="ICamera.hpp">
       <Filter>Header Files\Core\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.hpp">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

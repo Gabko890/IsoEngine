@@ -13,7 +13,7 @@
 
 #include "Window.hpp"
 #include "EditorGUI.hpp"
-#include "GLTFLoader.hpp"
+#include "Scene.hpp"
 #include "Camera.hpp"
 #include "Utils.hpp"
 #include "Renderer.hpp"
@@ -38,21 +38,22 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    GLTFLoader loader;
-    if (!loader.LoadModel(Utils::GetFullPath("../../assets/example_objects/test_cube.glb"))) {
+    Scene scene;
+    if (!scene.AddObject("test_cube1", Utils::GetFullPath("../../assets/example_objects/test_cube_color.glb"))) {
         SDL_Log("Failed to load model");
         return -1;
     }
 
-    SDL_Log("Loaded mesh instances: %zu", loader.GetInstances().size());
+    if (!scene.AddObject("test_cube2", Utils::GetFullPath("../../assets/example_objects/test_cube_color.glb"))) {
+        SDL_Log("Failed to load model");
+        return -1;
+    }
+
+    SDL_Log("Scene loaded successfully");
 
     FPSCamera camera(glm::vec3(0.0f, 0.0f, 5.0f));
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
     renderer.SetProjectionMatrix(projection);
-
-    glm::vec3 modelPosition(0.0f);
-    float anglex = 0.0f, angley = 0.0f, anglez = 0.0f;
-    float modelScale = 1.0f;
 
     glm::vec3 lightPos(0.0f, 2.0f, 2.0f);
     glm::vec3 lightColor(1.0f);
@@ -88,24 +89,33 @@ int main(int argc, char** argv) {
         glClearColor(130 / 255.0f, 200 / 255.0f, 229 / 255.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glm::mat4 modelTransform = glm::mat4(1.0f);
-        modelTransform = glm::translate(modelTransform, modelPosition);
-        modelTransform = glm::rotate(modelTransform, anglex, glm::vec3(1, 0, 0));
-        modelTransform = glm::rotate(modelTransform, angley, glm::vec3(0, 1, 0));
-        modelTransform = glm::rotate(modelTransform, anglez, glm::vec3(0, 0, 1));
-        modelTransform = glm::scale(modelTransform, glm::vec3(modelScale));
-
         renderer.SetLightProperties(lightPos, lightColor);
-
-        renderer.RenderInstances(loader.GetInstances(), camera, modelTransform);
+        scene.RenderScene(renderer, camera);
 
         gui.Render_ImGui_Frame([&]() {
-            ImGui::Begin("Transform");
-            ImGui::SliderFloat3("Position", glm::value_ptr(modelPosition), -10.0f, 10.0f);
-            ImGui::SliderAngle("Rotation X", &anglex);
-            ImGui::SliderAngle("Rotation Y", &angley);
-            ImGui::SliderAngle("Rotation Z", &anglez);
-            ImGui::SliderFloat("Scale", &modelScale, 0.01f, 10.0f);
+            ImGui::Begin("Scene Objects");
+            for (const auto& [id, obj] : scene.GetObjects()) {
+                if (ImGui::TreeNode(id.c_str())) {
+                    ImGui::Text("Model: %s", obj.modelPath.c_str());
+
+                    glm::vec3 pos = obj.position;
+                    if (ImGui::SliderFloat3("Position", glm::value_ptr(pos), -10.0f, 10.0f)) {
+                        scene.SetObjectPosition(id, pos);
+                    }
+
+                    glm::vec3 rot = obj.rotation;
+                    if (ImGui::SliderFloat3("Rotation", glm::value_ptr(rot), -3.14159f, 3.14159f)) {
+                        scene.SetObjectRotation(id, rot);
+                    }
+
+                    glm::vec3 scale = obj.scale;
+                    if (ImGui::SliderFloat3("Scale", glm::value_ptr(scale), 0.01f, 10.0f)) {
+                        scene.SetObjectScale(id, scale);
+                    }
+
+                    ImGui::TreePop();
+                }
+            }
             ImGui::End();
 
             ImGui::Begin("Light");
