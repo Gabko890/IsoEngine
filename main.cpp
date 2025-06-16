@@ -24,6 +24,7 @@
 int main(int argc, char** argv) {
     Window window("ISO Engine Editor", 1920, 1080, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
     EditorGUI gui(&window);
+    gui.ApplyStyle();
 
     SDL_GL_SetSwapInterval(-1);
     float dtime = 0;

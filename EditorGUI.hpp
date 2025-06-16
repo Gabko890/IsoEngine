@@ -17,4 +17,5 @@ public:
 	~EditorGUI();
 
 	void Render_ImGui_Frame(std::function<void()> Create_Frame);
+	void ApplyStyle(void);
 };
