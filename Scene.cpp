@@ -1,7 +1,7 @@
 #include "Scene.hpp"
 #include "ResourceManager.hpp"
 #include "Renderer.hpp"
-#include "ICamera.hpp"  // Add this include
+#include "ICamera.hpp"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtc/matrix_transform.hpp>
