@@ -58,6 +58,12 @@
     <Filter Include="Source Files\Core\Shaders">
       <UniqueIdentifier>{17936c40-7227-4ebd-841a-3a8c0f22c2a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Core\Scene">
+      <UniqueIdentifier>{880bb3d4-8601-45c9-a9de-91244e0998b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Scene">
+      <UniqueIdentifier>{37e70c2a-3026-4ef4-8073-dbca469420fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -121,7 +127,7 @@
       <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Source Files\Core</Filter>
+      <Filter>Source Files\Core\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -162,7 +168,7 @@
       <Filter>Header Files\Core\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Scene.hpp">
-      <Filter>Header Files\Core</Filter>
+      <Filter>Header Files\Core\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
