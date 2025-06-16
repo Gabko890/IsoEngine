@@ -43,10 +43,12 @@ int main(int argc, char** argv) {
     }
 
     Scene scene;
-    if (!scene.AddObject("test_cube1", Utils::GetFullPath("../../assets/hrabovky_assets/donut.glb"))) {
-        SDL_Log("Failed to load model");
-        return -1;
-    }
+    TerminalHelper::scene = &scene;
+
+    //if (!scene.AddObject("donut", Utils::GetFullPath("../../assets/hrabovky_assets/donut.glb"))) {
+    //    SDL_Log("Failed to load model");
+    //    return -1;
+    //}
 
     SDL_Log("Scene loaded successfully");
 
