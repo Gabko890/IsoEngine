@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
     }
 
     GLTFLoader loader;
-    if (!loader.LoadModel(Utils::GetFullPath("../../assets/example_objects/monk_character.glb"))) {
+    if (!loader.LoadModel(Utils::GetFullPath("../../assets/example_objects/test_cube.glb"))) {
         SDL_Log("Failed to load model");
         return -1;
     }
