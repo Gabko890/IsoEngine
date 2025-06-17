@@ -45,11 +45,6 @@ int main(int argc, char** argv) {
     Scene scene;
     TerminalHelper::scene = &scene;
 
-    //if (!scene.AddObject("donut", Utils::GetFullPath("../../assets/hrabovky_assets/donut.glb"))) {
-    //    SDL_Log("Failed to load model");
-    //    return -1;
-    //}
-
     SDL_Log("Scene loaded successfully");
 
     FPSCamera camera(glm::vec3(0.0f, 0.0f, 5.0f));
