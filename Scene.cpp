@@ -8,8 +8,14 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
 #include <tiny_gltf.h>
 #include <glad/glad.h>
+
+
+Scene::Scene()
+    : bg_color(30 / 255.0f, 30 / 255.0f, 30 / 255.0f)
+{}
 
 glm::mat4 SceneObject::GetTransform() const {
     glm::mat4 transform = glm::mat4(1.0f);
@@ -79,6 +85,12 @@ void Scene::SetObjectScale(const std::string& id, const glm::vec3& scale) {
     }
 }
 
+void Scene::SetBGColor(float r, float g, float b) {
+    bg_color.r = r / 255.0f;
+    bg_color.g = g / 255.0f;
+    bg_color.b = b / 255.0f;
+}
+
 void Scene::MoveObject(const std::string& id, const glm::vec3& offset) {
     SceneObject* obj = GetObject(id);
     if (obj) {
@@ -101,6 +113,9 @@ void Scene::ScaleObject(const std::string& id, const glm::vec3& scale) {
 }
 
 void Scene::RenderScene(Renderer& renderer, const ICamera& camera) const {
+    glClearColor(bg_color.r, bg_color.g, bg_color.b, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     for (const auto& [id, obj] : objects) {
         glm::mat4 objTransform = obj.GetTransform();
         renderer.RenderInstances(obj.instances, camera, objTransform);

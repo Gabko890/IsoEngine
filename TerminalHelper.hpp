@@ -64,12 +64,39 @@ public:
         arg.term.add_message(std::move(msg));
     }
 
+    static void bgcolor(argument_type& arg) {
+        ImTerm::message msg;
+        if (arg.command_line.size() < 4) {
+            msg.value = std::move("Syntax Error! bgcolor <r> <g> <b>");
+        }
+        else {
+            int r = atoi(arg.command_line[1].c_str());
+            int g = atoi(arg.command_line[2].c_str());
+            int b = atoi(arg.command_line[3].c_str());
+
+            if (r > 255 || g > 255 || b > 255) {
+                msg.value = std::move("Syntax Error! max value is 255!");
+            }
+
+            else if (r < 0 || g < 0 || b < 0) {
+                msg.value = std::move("Syntax Error! min value is 0!");
+            }
+
+            else scene->SetBGColor(r, g, b);
+        }
+        
+        msg.color_beg = msg.color_end = 0;
+        arg.term.add_message(std::move(msg));
+    }
+
     TerminalHelper() {
         add_command_({ "clear", "clear the screen", clear, no_completion });
         add_command_({ "echo", "echoes your text", echo, no_completion });
         
         add_command_({ "addobject", "adds object to scene", addobject, no_completion });
         add_command_({ "rmobject", "removes object from scene", rmobject, no_completion });
+
+        add_command_({ "bgcolor", "change color of renderer background", bgcolor, no_completion });
     }
 };
 

@@ -27,6 +27,8 @@ struct SceneObject {
 
 class Scene {
 public:
+    Scene();
+
     bool AddObject(const std::string& id, const std::string& modelPath);
     bool RemoveObject(const std::string& id);
 
@@ -36,6 +38,8 @@ public:
     void SetObjectPosition(const std::string& id, const glm::vec3& position);
     void SetObjectRotation(const std::string& id, const glm::vec3& rotation);
     void SetObjectScale(const std::string& id, const glm::vec3& scale);
+
+    void SetBGColor(float r, float g, float b);
 
     void MoveObject(const std::string& id, const glm::vec3& offset);
     void RotateObject(const std::string& id, const glm::vec3& rotation);
@@ -47,6 +51,8 @@ public:
 
 private:
     std::unordered_map<std::string, SceneObject> objects;
+    glm::vec3 bg_color;
+
     bool LoadModel(const std::string& path, std::vector<ModelInstance>& instances);
     bool LoadPrimitive(const tinygltf::Model& model, const tinygltf::Primitive& primitive, MeshPrimitive& meshPrim);
 };

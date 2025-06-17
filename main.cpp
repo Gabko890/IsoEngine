@@ -85,8 +85,8 @@ int main(int argc, char** argv) {
                 camera.Rotate(-event.motion.yrel * 0.1f, event.motion.xrel * 0.1f);
         }
 
-        glClearColor(130 / 255.0f, 200 / 255.0f, 229 / 255.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        /*glClearColor(130 / 255.0f, 200 / 255.0f, 229 / 255.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);*/
 
         renderer.SetLightProperties(lightPos, lightColor);
         scene.RenderScene(renderer, camera);
