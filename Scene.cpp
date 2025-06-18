@@ -3,6 +3,8 @@
 #include "Renderer.hpp"
 #include "ICamera.hpp"
 
+#include "Utils.hpp"
+
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
@@ -12,10 +14,16 @@
 #include <tiny_gltf.h>
 #include <glad/glad.h>
 
+#include <SDL3/SDL.h>
 
-Scene::Scene()
-    : bg_color(30 / 255.0f, 30 / 255.0f, 30 / 255.0f)
-{}
+#include <algorithm>
+
+
+Scene::Scene() :
+    bg_color(30 / 255.0f, 30 / 255.0f, 30 / 255.0f)
+{
+    path_aliases.emplace_back("assets", "../../assets");
+}
 
 glm::mat4 SceneObject::GetTransform() const {
     glm::mat4 transform = glm::mat4(1.0f);
@@ -35,8 +43,35 @@ bool Scene::AddObject(const std::string& id, const std::string& modelPath) {
     SceneObject obj;
     obj.id = id;
     obj.modelPath = modelPath;
+    std::string local_path = modelPath;
 
-    if (!LoadModel(modelPath, obj.instances)) {
+    if (modelPath[0] == '@') {
+        int s_pos = modelPath.find('/');
+        if (s_pos > modelPath.find('\\')) { 
+            s_pos = modelPath.find('\\');
+        }
+
+        if (s_pos == std::string::npos) {
+            return false;
+        }
+
+        std::string target = std::move(modelPath.substr(1, s_pos - 1));
+
+        auto alias = std::find_if(path_aliases.begin(), path_aliases.end(),
+            [&target](const std::pair<std::string, std::string>& p) {
+                return p.first == target;
+            });
+
+        if (alias == path_aliases.end()) {
+            return false;
+        }
+
+        local_path = alias->second + modelPath.substr(s_pos);
+    }
+    
+    local_path = Utils::GetFullPath(local_path.c_str());
+
+    if (!LoadModel(local_path, obj.instances)) {
         return false;
     }
 
@@ -89,6 +124,10 @@ void Scene::SetBGColor(float r, float g, float b) {
     bg_color.r = r / 255.0f;
     bg_color.g = g / 255.0f;
     bg_color.b = b / 255.0f;
+}
+
+void Scene::AddPathAlias(std::string key, std::string value) {
+    path_aliases.emplace_back(key, value);
 }
 
 void Scene::MoveObject(const std::string& id, const glm::vec3& offset) {

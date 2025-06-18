@@ -40,6 +40,7 @@ public:
     void SetObjectScale(const std::string& id, const glm::vec3& scale);
 
     void SetBGColor(float r, float g, float b);
+    void AddPathAlias(std::string key, std::string value);
 
     void MoveObject(const std::string& id, const glm::vec3& offset);
     void RotateObject(const std::string& id, const glm::vec3& rotation);
@@ -51,6 +52,7 @@ public:
 
 private:
     std::unordered_map<std::string, SceneObject> objects;
+    std::vector<std::pair<std::string, std::string>> path_aliases;
     glm::vec3 bg_color;
 
     bool LoadModel(const std::string& path, std::vector<ModelInstance>& instances);

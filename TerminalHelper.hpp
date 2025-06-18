@@ -35,9 +35,9 @@ public:
     static void addobject(argument_type& arg) {
         ImTerm::message msg;
         if (arg.command_line.size() < 3) {
-            msg.value = std::move("Syntax Error! addobject <id/name> <path_to_glb>");
+            msg.value = std::move("Syntax Error! \nUsage: addobject <id/name> <path_to_glb>");
         }
-        else if (scene != NULL && scene->AddObject(arg.command_line[1], Utils::GetFullPath(arg.command_line[2].c_str()))) {
+        else if (scene != NULL && scene->AddObject(arg.command_line[1], arg.command_line[2].c_str())) {
             msg.value = std::move("Object added succesfully!");
         }
         else {
@@ -51,7 +51,7 @@ public:
     static void rmobject(argument_type& arg) {
         ImTerm::message msg;
         if (arg.command_line.size() < 2) {
-            msg.value = std::move("Syntax Error! rmobject <id/name>");
+            msg.value = std::move("Syntax Error! \nUsage: rmobject <id/name>");
         }
         else if (scene != NULL && scene->RemoveObject(arg.command_line[1])) {
             msg.value = std::move("Object removed succesfully!");
@@ -67,7 +67,7 @@ public:
     static void bgcolor(argument_type& arg) {
         ImTerm::message msg;
         if (arg.command_line.size() < 4) {
-            msg.value = std::move("Syntax Error! bgcolor <r> <g> <b>");
+            msg.value = std::move("Syntax Error! \nUsage: bgcolor <r> <g> <b>");
         }
         else {
             int r = atoi(arg.command_line[1].c_str());
@@ -75,16 +75,30 @@ public:
             int b = atoi(arg.command_line[3].c_str());
 
             if (r > 255 || g > 255 || b > 255) {
-                msg.value = std::move("Syntax Error! max value is 255!");
+                msg.value = std::move("Syntax Error! \nMaximal value is 255!");
             }
 
             else if (r < 0 || g < 0 || b < 0) {
-                msg.value = std::move("Syntax Error! min value is 0!");
+                msg.value = std::move("Syntax Error! \nMinimal value is 0!");
             }
 
             else scene->SetBGColor(r, g, b);
         }
         
+        msg.color_beg = msg.color_end = 0;
+        arg.term.add_message(std::move(msg));
+    }
+
+    static void alias(argument_type& arg) {
+        ImTerm::message msg;
+        if (arg.command_line.size() < 3) {
+            msg.value = std::move("Syntax Error! \nUsage: alias <key> <value>");
+        }
+        else {
+            scene->AddPathAlias(arg.command_line[1], arg.command_line[2]);
+            msg.value = std::move("Alias added succesfully!");
+        }
+
         msg.color_beg = msg.color_end = 0;
         arg.term.add_message(std::move(msg));
     }
@@ -97,6 +111,7 @@ public:
         add_command_({ "rmobject", "removes object from scene", rmobject, no_completion });
 
         add_command_({ "bgcolor", "change color of renderer background", bgcolor, no_completion });
+        add_command_({ "alias", "adds path alias", alias, no_completion });
     }
 };
 

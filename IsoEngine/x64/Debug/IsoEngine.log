@@ -1,3 +1,4 @@
-﻿  EditorGUI.cpp
-IsoEngine\x64\Debug\Window.obj : warning LNK4042: object specified more than once; extras ignored
-  IsoEngine.vcxproj -> C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\x64\Debug\IsoEngine.exe
+﻿  Scene.cpp
+C:\Users\gabri\Desktop\Code\git\IsoEngine\Scene.cpp(49,19): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\gabri\Desktop\Code\git\IsoEngine\Scene.cpp(51,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  IsoEngine.vcxproj -> C:\Users\gabri\Desktop\Code\git\IsoEngine\x64\Debug\IsoEngine.exe
