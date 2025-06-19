@@ -9,6 +9,10 @@ build/
 *.suo
 *.VC.db
 *.ipch/
+*.log
+*.log/
+*.tlog
+*.tlog/
 
 # Ignore OS/macOS/Windows stuff
 .DS_Store
