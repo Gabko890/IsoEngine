@@ -210,7 +210,7 @@ bool Scene::LoadModel(const std::string& path, std::vector<ModelInstance>& insta
             MeshPrimitive* cachedMesh = ResourceManager::GetOrCreateMesh(meshKey, MeshPrimitive{});
 
             if (cachedMesh->vao == 0) {
-                if (!LoadPrimitive(model, prim, *cachedMesh)) {
+                if (!LoadPrimitive(path, model, prim, *cachedMesh)) {
                     continue;
                 }
             }
@@ -225,7 +225,7 @@ bool Scene::LoadModel(const std::string& path, std::vector<ModelInstance>& insta
     return true;
 }
 
-bool Scene::LoadPrimitive(const tinygltf::Model& model, const tinygltf::Primitive& primitive, MeshPrimitive& meshPrim) {
+bool Scene::LoadPrimitive(const std::string path, const tinygltf::Model& model, const tinygltf::Primitive& primitive, MeshPrimitive& meshPrim) {
     auto posIt = primitive.attributes.find("POSITION");
     if (posIt == primitive.attributes.end()) {
         return false;
@@ -345,7 +345,7 @@ bool Scene::LoadPrimitive(const tinygltf::Model& model, const tinygltf::Primitiv
             const tinygltf::Texture& texture = model.textures[textureIndex];
             const tinygltf::Image& image = model.images[texture.source];
 
-            std::string textureKey = "texture_" + std::to_string(textureIndex);
+            std::string textureKey = path + "_texture_" + std::to_string(textureIndex);
 
             GLuint textureId = 0;
             glGenTextures(1, &textureId);

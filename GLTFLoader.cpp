@@ -65,7 +65,7 @@ bool GLTFLoader::LoadModel(const std::string& path) {
             MeshPrimitive* cachedMesh = ResourceManager::GetOrCreateMesh(meshKey, MeshPrimitive{});
 
             if (cachedMesh->vao == 0) {
-                if (!LoadPrimitive(model, prim, *cachedMesh)) {
+                if (!LoadPrimitive(path, model, prim, *cachedMesh)) {
                     continue;
                 }
             }
@@ -80,7 +80,7 @@ bool GLTFLoader::LoadModel(const std::string& path) {
     return true;
 }
 
-bool GLTFLoader::LoadPrimitive(const tinygltf::Model& model, const tinygltf::Primitive& primitive, MeshPrimitive& meshPrim) {
+bool GLTFLoader::LoadPrimitive(const std::string path, const tinygltf::Model& model, const tinygltf::Primitive& primitive, MeshPrimitive& meshPrim) {
     auto posIt = primitive.attributes.find("POSITION");
     if (posIt == primitive.attributes.end()) {
         return false;
@@ -200,7 +200,7 @@ bool GLTFLoader::LoadPrimitive(const tinygltf::Model& model, const tinygltf::Pri
             const tinygltf::Texture& texture = model.textures[textureIndex];
             const tinygltf::Image& image = model.images[texture.source];
 
-            std::string textureKey = "texture_" + std::to_string(textureIndex);
+            std::string textureKey = path + "_texture_" + std::to_string(textureIndex);
 
             GLuint textureId = 0;
             glGenTextures(1, &textureId);

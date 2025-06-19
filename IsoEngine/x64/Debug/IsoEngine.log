@@ -1,4 +1,302 @@
-﻿  Scene.cpp
+﻿  EditorGUI.cpp
+  imgui.cpp
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_opengl3.cpp
+  imgui_impl_sdl3.cpp
+  imgui_tables.cpp
+  imgui_widgets.cpp
+  tiny_gltf.cc
+  FPSCamera.cpp
+  GLTFLoader.cpp
+  main.cpp
+C:\Users\gabri\Desktop\Code\git\IsoEngine\TerminalHelper.hpp(85,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'main.cpp')
+  
+C:\Users\gabri\Desktop\Code\git\IsoEngine\TerminalHelper.hpp(85,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'main.cpp')
+  
+C:\Users\gabri\Desktop\Code\git\IsoEngine\TerminalHelper.hpp(85,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'main.cpp')
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\utility(414,39): warning C4267: '=': conversion from 'size_t' to '_Ty1', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\utility(414,39): warning C4267:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\utility(414,39): warning C4267:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\utility(414,39): warning C4267:             _Ty1=unsigned long
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\utility(414,39): warning C4267:         ]
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\utility(414,39):
+      the template instantiation context (the oldest one first) is
+          C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(116,15):
+          see reference to function template instantiation 'std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>> &std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>::operator =<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>,0>(std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>> &&) noexcept' being compiled
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(116,15):
+              see the first reference to 'std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>::operator =' in 'ImTerm::details::simple_colors_split'
+  
+C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(242,51): warning C4267: '=': conversion from 'size_t' to 'unsigned long', possible loss of data
+  (compiling source file 'main.cpp')
+      C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(242,51):
+      the template instantiation context (the oldest one first) is
+          C:\Users\gabri\Desktop\Code\git\IsoEngine\TerminalHelper.hpp(18,9):
+          see reference to class template instantiation 'ImTerm::argument_t<ImTerm::terminal<TerminalHelper>>' being compiled
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+          C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\utils.hpp(34,58):
+          see reference to class template instantiation 'ImTerm::terminal<TerminalHelper>' being compiled
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+          C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(240,94):
+          while compiling class template member function 'bool ImTerm::terminal<TerminalHelper>::show(const std::vector<ImTerm::config_panels,std::allocator<ImTerm::config_panels>> &) noexcept'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\main.cpp(129,22):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::show' in 'main::<lambda_1>::operator ()'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+  
+C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(561,114): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+  (compiling source file 'main.cpp')
+      C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(561,114):
+      the template instantiation context (the oldest one first) is
+          C:\Users\gabri\Desktop\Code\git\IsoEngine\main.cpp(58,38):
+          see reference to function template instantiation 'ImTerm::terminal<TerminalHelper>::terminal<misc::details::structured_void,void>(const char *,int,int,std::shared_ptr<TerminalHelper>)' being compiled
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\main.cpp(58,38):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::terminal' in 'main'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+          C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(494,110):
+          while compiling class template member function 'void ImTerm::terminal<TerminalHelper>::display_settings_bar(const std::vector<ImTerm::config_panels,std::allocator<ImTerm::config_panels>> &) noexcept'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(312,22):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::display_settings_bar' in 'ImTerm::terminal<TerminalHelper>::show'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\main.cpp(129,22):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::show' in 'main::<lambda_1>::operator ()'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+  
+C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(764,81): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+  (compiling source file 'main.cpp')
+      C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(764,81):
+      the template instantiation context (the oldest one first) is
+          C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(219,3):
+          while compiling class template member function 'ImTerm::terminal<TerminalHelper>::terminal(misc::details::structured_void &,const char *,int,int,std::shared_ptr<TerminalHelper>,ImTerm::details::assert_wellformed<TerminalHelper,std::reference_wrapper<const ImTerm::command_t<ImTerm::terminal<TerminalHelper>>>> &&)'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+          C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(747,59):
+          while compiling class template member function 'void ImTerm::terminal<TerminalHelper>::show_input_text(void) noexcept'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(741,17):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::show_input_text' in 'ImTerm::terminal<TerminalHelper>::display_command_line'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(316,22):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::display_command_line' in 'ImTerm::terminal<TerminalHelper>::show'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\main.cpp(129,22):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::show' in 'main::<lambda_1>::operator ()'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+  
+C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(66,18): warning C4267: 'return': conversion from 'size_t' to 'unsigned long', possible loss of data
+  (compiling source file 'main.cpp')
+      C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(66,18):
+      the template instantiation context (the oldest one first) is
+          C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(747,59):
+          while compiling class template member function 'void ImTerm::terminal<TerminalHelper>::show_input_text(void) noexcept'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(741,17):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::show_input_text' in 'ImTerm::terminal<TerminalHelper>::display_command_line'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(316,22):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::display_command_line' in 'ImTerm::terminal<TerminalHelper>::show'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\main.cpp(129,22):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::show' in 'main::<lambda_1>::operator ()'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+          C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(783,21):
+          see reference to function template instantiation '_InIt *std::find_if_not<_Ty*,ImTerm::terminal<TerminalHelper>::show_input_text::<lambda_1>>(_InIt,const _InIt,_Pr)' being compiled
+          with
+          [
+              _InIt=char *,
+              _Ty=char,
+              TerminalHelper=TerminalHelper,
+              _Pr=ImTerm::terminal<TerminalHelper>::show_input_text::<lambda_1>
+          ]
+          C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(1499,80):
+          while compiling class template member function 'unsigned long ImTerm::terminal<TerminalHelper>::get_length(std::string_view) const'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(445,20):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::get_length' in 'ImTerm::terminal<TerminalHelper>::set_min_log_level'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(425,19):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::set_min_log_level' in 'ImTerm::terminal<TerminalHelper>::set_level_list_text'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(236,21):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::set_level_list_text' in 'ImTerm::terminal<TerminalHelper>::terminal'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.hpp(104,31):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::terminal' in 'ImTerm::terminal<TerminalHelper>::terminal'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\main.cpp(58,38):
+              see the first reference to 'ImTerm::terminal<TerminalHelper>::terminal' in 'main'
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+          C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(1500,18):
+          see reference to function template instantiation 'unsigned long ImTerm::details::get_length<TerminalHelper>(std::shared_ptr<TerminalHelper> &,std::string_view)' being compiled
+          with
+          [
+              TerminalHelper=TerminalHelper
+          ]
+  
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\utility(303,16): warning C4267: 'initializing': conversion from 'size_t' to '_Ty1', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\utility(303,16): warning C4267:         with
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\utility(303,16): warning C4267:         [
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\utility(303,16): warning C4267:             _Ty1=unsigned long
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\utility(303,16): warning C4267:         ]
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\utility(303,16):
+      the template instantiation context (the oldest one first) is
+          C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(88,11):
+          see reference to function template instantiation 'std::pair<std::_Tree_iterator<std::_Tree_val<std::_Tree_simple_types<std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>>>>,bool> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::emplace<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>>>(std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>> &&,std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>> &&)' being compiled
+          with
+          [
+              _Elem=char,
+              _Kty=std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,
+              _Ty=std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>,
+              _Pr=std::less<std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>>,
+              _Alloc=std::allocator<std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>>
+          ]
+              C:\Users\gabri\Desktop\Code\git\IsoEngine\external\ImTerm\include\imterm\terminal.tpp(88,18):
+              see the first reference to 'std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::emplace' in 'ImTerm::details::simple_colors_split'
+          with
+          [
+              _Kty=std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,
+              _Ty=std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>,
+              _Pr=std::less<std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>>,
+              _Alloc=std::allocator<std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>>
+          ]
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xtree(1048,30):
+          see reference to function template instantiation 'std::pair<std::_Tree_node<std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>,std::_Default_allocator_traits<_Alloc>::void_pointer> *,bool> std::_Tree<std::_Tmap_traits<_Kty,_Ty,_Pr,_Alloc,false>>::_Emplace<std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>>>(std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>> &&,std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>> &&)' being compiled
+          with
+          [
+              _Elem=char,
+              _Alloc=std::allocator<std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>>,
+              _Kty=std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,
+              _Ty=std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>,
+              _Pr=std::less<std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>>
+          ]
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xtree(1023,49):
+          see reference to function template instantiation 'std::_Tree_temp_node<std::allocator<std::_Tree_node<std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>,std::_Default_allocator_traits<_Alloc>::void_pointer>>>::_Tree_temp_node<_Ty,std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>>>(_Alnode &,std::_Tree_node<std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>,std::_Default_allocator_traits<_Alloc>::void_pointer> *,_Ty &&,std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>> &&)' being compiled
+          with
+          [
+              _Elem=char,
+              _Alloc=std::allocator<std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>>,
+              _Ty=std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,
+              _Alnode=std::allocator<std::_Tree_node<std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>,std::_Default_allocator_traits<std::allocator<std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>>>::void_pointer>>
+          ]
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xtree(830,25):
+          see reference to function template instantiation 'void std::_Default_allocator_traits<_Alloc>::construct<_Ty,std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>>>(_Alloc &,_Objty *const ,std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>> &&,std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>> &&)' being compiled
+          with
+          [
+              _Alloc=std::allocator<std::_Tree_node<std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>,std::_Default_allocator_traits<std::allocator<std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>>>::void_pointer>>,
+              _Ty=std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>,
+              _Elem=char,
+              _Objty=std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>
+          ]
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xmemory(730,14):
+          see reference to function template instantiation '_Ty *std::construct_at<_Objty,std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>>>(_Ty *const ,std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>> &&,std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>> &&) noexcept' being compiled
+          with
+          [
+              _Ty=std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>,
+              _Objty=std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>,
+              _Elem=char
+          ]
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\xutility(463,69):
+          see reference to function template instantiation 'std::pair<const std::_String_const_iterator<std::_String_val<std::_Simple_types<_Elem>>>,std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>>::pair<_Ty,std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>>,0>(_Other1 &&,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Elem=char,
+              _Ty=std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,
+              _Other1=std::_String_const_iterator<std::_String_val<std::_Simple_types<char>>>,
+              _Other2=std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>>
+          ]
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\utility(274,76):
+          see reference to function template instantiation 'std::pair<unsigned long,std::optional<ImTerm::theme::constexpr_color>>::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>,0>(std::pair<unsigned __int64,std::optional<ImTerm::theme::constexpr_color>> &&) noexcept' being compiled
+  
+  Renderer.cpp
+  ResourceManager.cpp
+  Scene.cpp
 C:\Users\gabri\Desktop\Code\git\IsoEngine\Scene.cpp(49,19): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 C:\Users\gabri\Desktop\Code\git\IsoEngine\Scene.cpp(51,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Shader.cpp
+  TargetCamera.cpp
+  Util_path.cpp
+  Window.cpp
+  Window.hpp
+  Generating Code...
+  glad.c
+IsoEngine\x64\Debug\Window.obj : warning LNK4042: object specified more than once; extras ignored
   IsoEngine.vcxproj -> C:\Users\gabri\Desktop\Code\git\IsoEngine\x64\Debug\IsoEngine.exe

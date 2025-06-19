@@ -13,6 +13,6 @@ public:
     const std::vector<ModelInstance>& GetInstances() const;
 
 private:
-    bool LoadPrimitive(const tinygltf::Model& model, const tinygltf::Primitive& primitive, MeshPrimitive& meshPrim);
+    bool LoadPrimitive(const std::string path, const tinygltf::Model& model, const tinygltf::Primitive& primitive, MeshPrimitive& meshPrim);
     std::vector<ModelInstance> instances;
 };

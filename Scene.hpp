@@ -56,5 +56,5 @@ private:
     glm::vec3 bg_color;
 
     bool LoadModel(const std::string& path, std::vector<ModelInstance>& instances);
-    bool LoadPrimitive(const tinygltf::Model& model, const tinygltf::Primitive& primitive, MeshPrimitive& meshPrim);
+    bool LoadPrimitive(const std::string path, const tinygltf::Model& model, const tinygltf::Primitive& primitive, MeshPrimitive& meshPrim);
 };
