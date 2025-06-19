@@ -1,5 +1,0 @@
-﻿  main.cpp
-C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\main.cpp(171,52): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\main.cpp(171,39): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\main.cpp(171,26): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-  IsoEngine.vcxproj -> C:\Users\gabri\Desktop\Coda\git\CPP\IsoEngine\x64\Editor_DBG\IsoEngine.exe
