@@ -14,6 +14,14 @@ namespace tinygltf {
     struct Primitive;
 }
 
+struct PhysicsProperties {
+    bool hasCollision = false;
+    bool isAffectedByPhysics = false;
+    bool isStatic = false;
+    float mass = 1.0f;
+    glm::vec3 collisionShapeSize = glm::vec3(1.0f);
+};
+
 struct SceneObject {
     std::string id;
     std::string modelPath;
@@ -21,6 +29,7 @@ struct SceneObject {
     glm::vec3 rotation = glm::vec3(0.0f);
     glm::vec3 scale = glm::vec3(1.0f);
     std::vector<ModelInstance> instances;
+    PhysicsProperties physics;
 
     glm::mat4 GetTransform() const;
 
@@ -41,6 +50,18 @@ public:
     void SetObjectPosition(const std::string& id, const glm::vec3& position);
     void SetObjectRotation(const std::string& id, const glm::vec3& rotation);
     void SetObjectScale(const std::string& id, const glm::vec3& scale);
+
+    void SetObjectPhysicsEnabled(const std::string& id, bool enabled);
+    void SetObjectCollisionEnabled(const std::string& id, bool enabled);
+    void SetObjectStatic(const std::string& id, bool isStatic);
+    void SetObjectMass(const std::string& id, float mass);
+    void SetObjectCollisionShape(const std::string& id, const glm::vec3& shapeSize);
+
+    bool GetObjectPhysicsEnabled(const std::string& id) const;
+    bool GetObjectCollisionEnabled(const std::string& id) const;
+    bool GetObjectStatic(const std::string& id) const;
+    float GetObjectMass(const std::string& id) const;
+    glm::vec3 GetObjectCollisionShape(const std::string& id) const;
 
     void SetBGColor(float r, float g, float b);
     void AddPathAlias(std::string key, std::string value);

@@ -13,13 +13,12 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/quaternion.hpp>
 
-#include <reactphysics3d/reactphysics3d.h>
-
 #include "Window.hpp"
 #include "Scene.hpp"
 #include "Camera.hpp"
 #include "Utils.hpp"
 #include "Renderer.hpp"
+#include "PhysicsSystem.hpp"
 
 #include "Editor.hpp"
 #include "TerminalHelper.hpp"
@@ -46,6 +45,12 @@ int main(int argc, char** argv) {
     }
 
     Scene scene;
+    PhysicsSystem physicsSystem;
+    if (!physicsSystem.Initialize()) {
+        SDL_Log("Failed to initialize physics system");
+        return -1;
+    }
+
     TerminalHelper::scene = &scene;
 
     scene.AddObject("cube1", "@assets/example_objects/test_cube_color.glb");
@@ -57,6 +62,36 @@ int main(int argc, char** argv) {
 
     scene.AddObject("ground", "@assets/example_objects/plane_color.glb");
     scene.MoveObject("ground", glm::vec3(0.0f, -3.0f, 0.0f));
+
+    scene.SetObjectPhysicsEnabled("cube1", true);
+    scene.SetObjectCollisionEnabled("cube1", true);
+    scene.SetObjectMass("cube1", 1.0f);
+
+    scene.SetObjectPhysicsEnabled("cube2", true);
+    scene.SetObjectCollisionEnabled("cube2", true);
+    scene.SetObjectMass("cube2", 1.0f);
+
+    scene.SetObjectPhysicsEnabled("cube3", true);
+    scene.SetObjectCollisionEnabled("cube3", true);
+    scene.SetObjectMass("cube3", 1.0f);
+
+    scene.SetObjectPhysicsEnabled("ground", true);
+    scene.SetObjectCollisionEnabled("ground", true);
+    scene.SetObjectStatic("ground", true);
+    scene.SetObjectCollisionShape("ground", glm::vec3(5.0f, 0.1f, 5.0f));
+
+    /*for (const auto& [id, obj] : scene.GetObjects()) {
+        if (obj.physics.hasCollision) {
+            physicsSystem.CreateRigidBody(
+                id,
+                obj.position,
+                obj.rotation,
+                obj.physics.collisionShapeSize,
+                obj.physics.mass,
+                obj.physics.isStatic
+            );
+        }
+    }*/
 
     FPSCamera camera(glm::vec3(0.0f, 0.0f, 5.0f));
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
@@ -71,52 +106,6 @@ int main(int argc, char** argv) {
     bool running = true;
     SDL_Event event;
 
-    // === ReactPhysics3D ===
-    reactphysics3d::PhysicsCommon physicsCommon;
-    reactphysics3d::PhysicsWorld* physicsWorld = physicsCommon.createPhysicsWorld();
-    physicsWorld->setGravity(reactphysics3d::Vector3(0.0f, -9.81f, 0.0f));
-
-    // Ground
-    SceneObject* ground = scene.GetObject("ground");
-    reactphysics3d::Transform groundTransform(
-        reactphysics3d::Vector3(ground->position.x, ground->position.y, ground->position.z),
-        reactphysics3d::Quaternion::identity());
-
-    reactphysics3d::RigidBody* groundBody = physicsWorld->createRigidBody(groundTransform);
-    groundBody->setType(reactphysics3d::BodyType::STATIC);
-    auto groundShape = physicsCommon.createBoxShape(reactphysics3d::Vector3(5.0f, 0.1f, 5.0f));
-    groundBody->addCollider(groundShape, reactphysics3d::Transform::identity());
-
-    // Cube1
-    SceneObject* cube1 = scene.GetObject("cube1");
-    reactphysics3d::Transform cubeTransform1(
-        reactphysics3d::Vector3(cube1->position.x, cube1->position.y, cube1->position.z),
-        reactphysics3d::Quaternion::identity());
-    reactphysics3d::RigidBody* cubeBody1 = physicsWorld->createRigidBody(cubeTransform1);
-    cubeBody1->setMass(1.0f);
-    auto cubeShape1 = physicsCommon.createBoxShape(reactphysics3d::Vector3(1.0f, 1.0f, 1.0f));
-    cubeBody1->addCollider(cubeShape1, reactphysics3d::Transform::identity());
-
-    // Cube2
-    SceneObject* cube2 = scene.GetObject("cube2");
-    reactphysics3d::Transform cubeTransform2(
-        reactphysics3d::Vector3(cube2->position.x, cube2->position.y, cube2->position.z),
-        reactphysics3d::Quaternion::identity());
-    reactphysics3d::RigidBody* cubeBody2 = physicsWorld->createRigidBody(cubeTransform2);
-    cubeBody2->setMass(1.0f);
-    auto cubeShape2 = physicsCommon.createBoxShape(reactphysics3d::Vector3(1.0f, 1.0f, 1.0f));
-    cubeBody2->addCollider(cubeShape2, reactphysics3d::Transform::identity());
-
-    // Cube3
-    SceneObject* cube3 = scene.GetObject("cube3");
-    reactphysics3d::Transform cubeTransform3(
-        reactphysics3d::Vector3(cube3->position.x, cube3->position.y, cube3->position.z),
-        reactphysics3d::Quaternion::identity());
-    reactphysics3d::RigidBody* cubeBody3 = physicsWorld->createRigidBody(cubeTransform3);
-    cubeBody3->setMass(1.0f);
-    auto cubeShape3 = physicsCommon.createBoxShape(reactphysics3d::Vector3(1.0f, 1.0f, 1.0f));
-    cubeBody3->addCollider(cubeShape3, reactphysics3d::Transform::identity());
-
     while (running) {
         Uint64 currentTime = SDL_GetTicks();
         dtime = (currentTime - ltime) / 1000.0f;
@@ -130,10 +119,26 @@ int main(int argc, char** argv) {
         if (keystate[SDL_SCANCODE_S]) camera.MoveForward(dtime, -5.0f);
         if (keystate[SDL_SCANCODE_D]) camera.MoveRight(dtime, 5.0f);
         if (keystate[SDL_SCANCODE_A]) camera.MoveRight(dtime, -5.0f);
-        if (keystate[SDL_SCANCODE_P]) simulate ^= 1;
+        if (keystate[SDL_SCANCODE_P]) { 
+            for (const auto& [id, obj] : scene.GetObjects()) {
+                if (obj.physics.hasCollision) {
+                    physicsSystem.CreateRigidBody(
+                        id,
+                        obj.position,
+                        obj.rotation,
+                        obj.physics.collisionShapeSize,
+                        obj.physics.mass,
+                        obj.physics.isStatic
+                    );
+                }
+            }
+
+            simulate = true;
+        };
 
         if (simulate) {
-            physicsWorld->update(dtime);
+            physicsSystem.Update(dtime);
+            physicsSystem.SyncPhysicsToScene(scene);
         }
 
         while (SDL_PollEvent(&event)) {
@@ -149,20 +154,6 @@ int main(int argc, char** argv) {
             else if (event.type == SDL_EVENT_MOUSE_MOTION && move_toggle)
                 camera.Rotate(-event.motion.yrel * 0.1f, event.motion.xrel * 0.1f);
         }
-
-        // === Sync Physics to Scene ===
-        auto syncBody = [](SceneObject* obj, reactphysics3d::RigidBody* body) {
-            auto t = body->getTransform();
-            obj->position = glm::vec3(t.getPosition().x, t.getPosition().y, t.getPosition().z);
-
-            reactphysics3d::Quaternion q = t.getOrientation();
-            glm::quat glmQ(q.w, q.x, q.y, q.z);
-            obj->rotation = glm::eulerAngles(glm::normalize(glmQ));
-            };
-
-        syncBody(cube1, cubeBody1);
-        syncBody(cube2, cubeBody2);
-        syncBody(cube3, cubeBody3);
 
         editor.Add_GUI_Frame([&]() {
             ImGui::Begin("Scene Objects");
@@ -183,6 +174,35 @@ int main(int argc, char** argv) {
                     glm::vec3 scale = obj.scale;
                     if (ImGui::SliderFloat3("Scale", glm::value_ptr(scale), 0.01f, 10.0f)) {
                         scene.SetObjectScale(id, scale);
+                    }
+
+                    if (ImGui::TreeNode("Physics")) {
+                        bool hasCollision = obj.physics.hasCollision;
+                        if (ImGui::Checkbox("Has Collision", &hasCollision)) {
+                            scene.SetObjectCollisionEnabled(id, hasCollision);
+                        }
+
+                        bool isAffectedByPhysics = obj.physics.isAffectedByPhysics;
+                        if (ImGui::Checkbox("Affected by Physics", &isAffectedByPhysics)) {
+                            scene.SetObjectPhysicsEnabled(id, isAffectedByPhysics);
+                        }
+
+                        bool isStatic = obj.physics.isStatic;
+                        if (ImGui::Checkbox("Static", &isStatic)) {
+                            scene.SetObjectStatic(id, isStatic);
+                        }
+
+                        float mass = obj.physics.mass;
+                        if (ImGui::SliderFloat("Mass", &mass, 0.1f, 10.0f)) {
+                            scene.SetObjectMass(id, mass);
+                        }
+
+                        glm::vec3 shapeSize = obj.physics.collisionShapeSize;
+                        if (ImGui::SliderFloat3("Collision Shape", glm::value_ptr(shapeSize), 0.1f, 10.0f)) {
+                            scene.SetObjectCollisionShape(id, shapeSize);
+                        }
+
+                        ImGui::TreePop();
                     }
 
                     ImGui::TreePop();
@@ -214,6 +234,5 @@ int main(int argc, char** argv) {
         window.Update();
     }
 
-    physicsCommon.destroyPhysicsWorld(physicsWorld);
     return 0;
 }
