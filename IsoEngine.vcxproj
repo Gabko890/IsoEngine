@@ -142,14 +142,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6;$(SolutionDir)\external\ImTerm\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6;$(SolutionDir)\external\ImTerm\include;$(SolutionDir)\external\reactphysics3d\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\external\SDL3-3.2.14\lib\x64;$(SolutionDir)\external\SDL3_image-3.2.4\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL3.lib;SDL3_test.lib;SDL3_image.lib;opengl32.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\external\SDL3-3.2.14\lib\x64;$(SolutionDir)\external\SDL3_image-3.2.4\lib\x64;$(SolutionDir)\external\reactphysics3d\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL3.lib;SDL3_test.lib;SDL3_image.lib;opengl32.lib;reactphysics3d.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Editor_DBG|x64'">
@@ -158,14 +158,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_EDITOR_BUILD;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6;$(SolutionDir)\external\ImTerm\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6;$(SolutionDir)\external\ImTerm\include;$(SolutionDir)\external\reactphysics3d\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\external\SDL3-3.2.14\lib\x64;$(SolutionDir)\external\SDL3_image-3.2.4\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL3.lib;SDL3_test.lib;SDL3_image.lib;opengl32.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\external\SDL3-3.2.14\lib\x64;$(SolutionDir)\external\SDL3_image-3.2.4\lib\x64;$(SolutionDir)\external\reactphysics3d\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL3.lib;SDL3_test.lib;SDL3_image.lib;opengl32.lib;reactphysics3d.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -176,7 +176,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6;$(SolutionDir)\external\ImTerm\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\external\SDL3-3.2.14\include;$(SolutionDir)\external\SDL3_image-3.2.4\include;$(SolutionDir)\external\glad\include;$(SolutionDir)\external\ImGui\include;$(SolutionDir)\external\glm-1.0.1-light;$(SolutionDir)\external\tinygltf-2.9.6;$(SolutionDir)\external\ImTerm\include;$(SolutionDir)\external\reactphysics3d\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -184,8 +184,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\external\SDL3-3.2.14\lib\x64;$(SolutionDir)\external\SDL3_image-3.2.4\lib\x64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL3.lib;SDL3_test.lib;SDL3_image.lib;opengl32.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)\external\SDL3-3.2.14\lib\x64;$(SolutionDir)\external\SDL3_image-3.2.4\lib\x64;$(SolutionDir)\external\reactphysics3d\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL3.lib;SDL3_test.lib;SDL3_image.lib;opengl32.lib;reactphysics3d.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

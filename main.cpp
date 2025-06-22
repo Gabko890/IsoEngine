@@ -11,6 +11,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <reactphysics3d/reactphysics3d.h>
+
 #include "Window.hpp"
 #include "Scene.hpp"
 #include "Camera.hpp"
@@ -45,7 +47,10 @@ int main(int argc, char** argv) {
     Scene scene;
     TerminalHelper::scene = &scene;
 
-    SDL_Log("Scene loaded successfully");
+    scene.AddObject("cube", "@assets/example_objects/test_cube_color.glb");
+    scene.AddObject("ground", "@assets/example_objects/plane_color.glb");
+
+    scene.MoveObject("ground", glm::vec3(0.0f, -3.0f, 0.0f));
 
     FPSCamera camera(glm::vec3(0.0f, 0.0f, 5.0f));
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
@@ -60,16 +65,56 @@ int main(int argc, char** argv) {
     bool running = true;
     SDL_Event event;
 
+    // === ReactPhysics3D ===
+    reactphysics3d::PhysicsCommon physicsCommon;
+    reactphysics3d::PhysicsWorld* physicsWorld = physicsCommon.createPhysicsWorld();
+    physicsWorld->setGravity(reactphysics3d::Vector3(0.0f, -9.81f, 0.0f));
+
+    // Ground - Static Body
+    SceneObject* ground = scene.GetObject("ground");
+    reactphysics3d::Transform groundTransform(
+        reactphysics3d::Vector3(ground->position.x, ground->position.y, ground->position.z),
+        reactphysics3d::Quaternion::identity());
+
+    reactphysics3d::RigidBody* groundBody = physicsWorld->createRigidBody(groundTransform);
+    groundBody->setType(reactphysics3d::BodyType::STATIC);
+
+    // Approximate ground shape
+    auto groundShape = physicsCommon.createBoxShape(reactphysics3d::Vector3(5.0f, 0.1f, 5.0f)); // Adjust to size
+    groundBody->addCollider(groundShape, reactphysics3d::Transform::identity());
+
+    // Cube - Dynamic Body
+    SceneObject* cube = scene.GetObject("cube");
+    reactphysics3d::Transform cubeTransform(
+        reactphysics3d::Vector3(cube->position.x, cube->position.y, cube->position.z),
+        reactphysics3d::Quaternion::identity());
+
+    reactphysics3d::RigidBody* cubeBody = physicsWorld->createRigidBody(cubeTransform);
+    cubeBody->setMass(1.0f); // Enable dynamics
+
+    auto cubeShape = physicsCommon.createBoxShape(reactphysics3d::Vector3(0.5f, 0.5f, 0.5f)); // Adjust to cube size
+    cubeBody->addCollider(cubeShape, reactphysics3d::Transform::identity());
+
+
     while (running) {
         Uint64 currentTime = SDL_GetTicks();
         dtime = (currentTime - ltime) / 1000.0f;
+        if (dtime <= 0.0f) dtime = 0.001f;  // Minimum 1ms to avoid physics crash
+
         ltime = currentTime;
+
+        static bool simulate = false;
 
         const Uint8* keystate = (Uint8*)SDL_GetKeyboardState(nullptr);
         if (keystate[SDL_SCANCODE_W]) camera.MoveForward(dtime, 5.0f);
         if (keystate[SDL_SCANCODE_S]) camera.MoveForward(dtime, -5.0f);
         if (keystate[SDL_SCANCODE_D]) camera.MoveRight(dtime, 5.0f);
         if (keystate[SDL_SCANCODE_A]) camera.MoveRight(dtime, -5.0f);
+        if (keystate[SDL_SCANCODE_P]) simulate ^= 1;
+
+        if (simulate) {
+            physicsWorld->update(dtime);
+        }
 
         while (SDL_PollEvent(&event)) {
             ImGui_ImplSDL3_ProcessEvent(&event);
@@ -134,10 +179,15 @@ int main(int argc, char** argv) {
         renderer.SetLightProperties(lightPos, lightColor);
         scene.RenderScene(renderer, camera);
 
+        reactphysics3d::Transform cubePhysicsTransform = cubeBody->getTransform();
+        reactphysics3d::Vector3 pos = cubePhysicsTransform.getPosition();
+        cube->position = glm::vec3(pos.x, pos.y, pos.z);
+
         editor.Render();
 
         window.Update();
     }
 
+    physicsCommon.destroyPhysicsWorld(physicsWorld);
     return 0;
 }

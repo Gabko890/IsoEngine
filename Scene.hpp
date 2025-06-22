@@ -24,7 +24,6 @@ struct SceneObject {
 
     glm::mat4 GetTransform() const;
 
-    // Binary serialization
     void WriteToBinary(std::ofstream& file) const;
     bool ReadFromBinary(std::ifstream& file);
 };
