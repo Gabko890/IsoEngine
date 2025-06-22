@@ -103,6 +103,40 @@ public:
         arg.term.add_message(std::move(msg));
     }
 
+    static void savescene(argument_type& arg) {
+        ImTerm::message msg;
+
+        if (arg.command_line.size() < 2) {
+            msg.value = std::move("Syntax Error! \nUsage: savescene <filename>");
+        }
+        else if (scene->SaveToFile(arg.command_line[1].c_str())) {
+            msg.value = std::move("Scene saved succesfully!");
+        }
+        else {
+            msg.value = std::move("Error ocurred while saving scene!");
+        }
+
+        msg.color_beg = msg.color_end = 0;
+        arg.term.add_message(std::move(msg));
+    }
+
+    static void loadscene(argument_type& arg) {
+        ImTerm::message msg;
+
+        if (arg.command_line.size() < 2) {
+            msg.value = std::move("Syntax Error! \nUsage: loadscene <filename>");
+        }
+        else if (scene->LoadFromFile(arg.command_line[1].c_str())) {
+            msg.value = std::move("Scene loaded succesfully!");
+        }
+        else {
+            msg.value = std::move("Error ocurred while loading scene!");
+        }
+
+        msg.color_beg = msg.color_end = 0;
+        arg.term.add_message(std::move(msg));
+    }
+
     TerminalHelper() {
         add_command_({ "clear", "clear the screen", clear, no_completion });
         add_command_({ "echo", "echoes your text", echo, no_completion });
@@ -112,6 +146,9 @@ public:
 
         add_command_({ "bgcolor", "change color of renderer background", bgcolor, no_completion });
         add_command_({ "alias", "adds path alias", alias, no_completion });
+
+        add_command_({ "savescene", "save scene to file", savescene, no_completion });
+        add_command_({ "loadscene", "load scene from file", loadscene, no_completion });
     }
 };
 

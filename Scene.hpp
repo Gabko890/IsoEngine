@@ -23,6 +23,10 @@ struct SceneObject {
     std::vector<ModelInstance> instances;
 
     glm::mat4 GetTransform() const;
+
+    // Binary serialization
+    void WriteToBinary(std::ofstream& file) const;
+    bool ReadFromBinary(std::ifstream& file);
 };
 
 class Scene {
@@ -49,6 +53,9 @@ public:
     void RenderScene(Renderer& renderer, const ICamera& camera) const;
 
     const std::unordered_map<std::string, SceneObject>& GetObjects() const { return objects; }
+
+    bool SaveToFile(const std::string& filePath) const;
+    bool LoadFromFile(const std::string& filePath);
 
 private:
     std::unordered_map<std::string, SceneObject> objects;
