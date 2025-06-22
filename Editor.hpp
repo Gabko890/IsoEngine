@@ -11,11 +11,14 @@ class Editor {
 private:
 	ImGuiIO* io = NULL;
     Window* sdl_window = NULL;
+	bool frame_swap = true;
 
 public:
 	Editor(Window* window);
 	~Editor();
 
-	void Render_ImGui_Frame(std::function<void()> Create_Frame);
+	void Add_GUI_Frame(std::function<void()> Create_Frame);
 	void ApplyStyle(void);
+
+	void Render(void);
 };

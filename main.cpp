@@ -85,13 +85,7 @@ int main(int argc, char** argv) {
                 camera.Rotate(-event.motion.yrel * 0.1f, event.motion.xrel * 0.1f);
         }
 
-        /*glClearColor(130 / 255.0f, 200 / 255.0f, 229 / 255.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);*/
-
-        renderer.SetLightProperties(lightPos, lightColor);
-        scene.RenderScene(renderer, camera);
-
-        editor.Render_ImGui_Frame([&]() {
+        editor.Add_GUI_Frame([&]() {
             ImGui::Begin("Scene Objects");
             for (const auto& [id, obj] : scene.GetObjects()) {
                 if (ImGui::TreeNode(id.c_str())) {
@@ -135,6 +129,12 @@ int main(int argc, char** argv) {
             ImGui::Dummy(ImGui::GetContentRegionAvail());
             ImGui::End();
         });
+        
+
+        renderer.SetLightProperties(lightPos, lightColor);
+        scene.RenderScene(renderer, camera);
+
+        editor.Render();
 
         window.Update();
     }

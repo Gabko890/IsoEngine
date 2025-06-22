@@ -27,16 +27,24 @@ Editor::~Editor() {
     ImGui::DestroyContext();
 }
 
-void Editor::Render_ImGui_Frame(std::function<void()> Create_Frame) {
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplSDL3_NewFrame();
-    ImGui::NewFrame();
+void Editor::Add_GUI_Frame(std::function<void()> Create_Frame) {
+    if (frame_swap) {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplSDL3_NewFrame();
+        ImGui::NewFrame();
+
+        frame_swap = false;
+    }
 
     Create_Frame();
+}
 
+void Editor::Render(void) {
     ImGui::Render();
     glViewport(0, 0, (int)io->DisplaySize.x, (int)io->DisplaySize.y);
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+    frame_swap = true;
 }
 
 void Editor::ApplyStyle(void) {
