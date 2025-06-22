@@ -7,9 +7,11 @@
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_opengl3.h>
 
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include <reactphysics3d/reactphysics3d.h>
 
@@ -21,7 +23,6 @@
 
 #include "Editor.hpp"
 #include "TerminalHelper.hpp"
-
 
 int main(int argc, char** argv) {
     Window window("ISO Engine Editor", 1920, 1080, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
@@ -47,9 +48,14 @@ int main(int argc, char** argv) {
     Scene scene;
     TerminalHelper::scene = &scene;
 
-    scene.AddObject("cube", "@assets/example_objects/test_cube_color.glb");
-    scene.AddObject("ground", "@assets/example_objects/plane_color.glb");
+    scene.AddObject("cube1", "@assets/example_objects/test_cube_color.glb");
+    scene.AddObject("cube2", "@assets/example_objects/test_cube_color.glb");
+    scene.AddObject("cube3", "@assets/example_objects/test_cube_color.glb");
 
+    scene.MoveObject("cube2", glm::vec3(1.2f, 3.4f, 0.4f));
+    scene.MoveObject("cube3", glm::vec3(-0.8f, 9.0f, 0.2f));
+
+    scene.AddObject("ground", "@assets/example_objects/plane_color.glb");
     scene.MoveObject("ground", glm::vec3(0.0f, -3.0f, 0.0f));
 
     FPSCamera camera(glm::vec3(0.0f, 0.0f, 5.0f));
@@ -70,7 +76,7 @@ int main(int argc, char** argv) {
     reactphysics3d::PhysicsWorld* physicsWorld = physicsCommon.createPhysicsWorld();
     physicsWorld->setGravity(reactphysics3d::Vector3(0.0f, -9.81f, 0.0f));
 
-    // Ground - Static Body
+    // Ground
     SceneObject* ground = scene.GetObject("ground");
     reactphysics3d::Transform groundTransform(
         reactphysics3d::Vector3(ground->position.x, ground->position.y, ground->position.z),
@@ -78,29 +84,43 @@ int main(int argc, char** argv) {
 
     reactphysics3d::RigidBody* groundBody = physicsWorld->createRigidBody(groundTransform);
     groundBody->setType(reactphysics3d::BodyType::STATIC);
-
-    // Approximate ground shape
-    auto groundShape = physicsCommon.createBoxShape(reactphysics3d::Vector3(5.0f, 0.1f, 5.0f)); // Adjust to size
+    auto groundShape = physicsCommon.createBoxShape(reactphysics3d::Vector3(5.0f, 0.1f, 5.0f));
     groundBody->addCollider(groundShape, reactphysics3d::Transform::identity());
 
-    // Cube - Dynamic Body
-    SceneObject* cube = scene.GetObject("cube");
-    reactphysics3d::Transform cubeTransform(
-        reactphysics3d::Vector3(cube->position.x, cube->position.y, cube->position.z),
+    // Cube1
+    SceneObject* cube1 = scene.GetObject("cube1");
+    reactphysics3d::Transform cubeTransform1(
+        reactphysics3d::Vector3(cube1->position.x, cube1->position.y, cube1->position.z),
         reactphysics3d::Quaternion::identity());
+    reactphysics3d::RigidBody* cubeBody1 = physicsWorld->createRigidBody(cubeTransform1);
+    cubeBody1->setMass(1.0f);
+    auto cubeShape1 = physicsCommon.createBoxShape(reactphysics3d::Vector3(1.0f, 1.0f, 1.0f));
+    cubeBody1->addCollider(cubeShape1, reactphysics3d::Transform::identity());
 
-    reactphysics3d::RigidBody* cubeBody = physicsWorld->createRigidBody(cubeTransform);
-    cubeBody->setMass(1.0f); // Enable dynamics
+    // Cube2
+    SceneObject* cube2 = scene.GetObject("cube2");
+    reactphysics3d::Transform cubeTransform2(
+        reactphysics3d::Vector3(cube2->position.x, cube2->position.y, cube2->position.z),
+        reactphysics3d::Quaternion::identity());
+    reactphysics3d::RigidBody* cubeBody2 = physicsWorld->createRigidBody(cubeTransform2);
+    cubeBody2->setMass(1.0f);
+    auto cubeShape2 = physicsCommon.createBoxShape(reactphysics3d::Vector3(1.0f, 1.0f, 1.0f));
+    cubeBody2->addCollider(cubeShape2, reactphysics3d::Transform::identity());
 
-    auto cubeShape = physicsCommon.createBoxShape(reactphysics3d::Vector3(0.5f, 0.5f, 0.5f)); // Adjust to cube size
-    cubeBody->addCollider(cubeShape, reactphysics3d::Transform::identity());
-
+    // Cube3
+    SceneObject* cube3 = scene.GetObject("cube3");
+    reactphysics3d::Transform cubeTransform3(
+        reactphysics3d::Vector3(cube3->position.x, cube3->position.y, cube3->position.z),
+        reactphysics3d::Quaternion::identity());
+    reactphysics3d::RigidBody* cubeBody3 = physicsWorld->createRigidBody(cubeTransform3);
+    cubeBody3->setMass(1.0f);
+    auto cubeShape3 = physicsCommon.createBoxShape(reactphysics3d::Vector3(1.0f, 1.0f, 1.0f));
+    cubeBody3->addCollider(cubeShape3, reactphysics3d::Transform::identity());
 
     while (running) {
         Uint64 currentTime = SDL_GetTicks();
         dtime = (currentTime - ltime) / 1000.0f;
-        if (dtime <= 0.0f) dtime = 0.001f;  // Minimum 1ms to avoid physics crash
-
+        if (dtime <= 0.0f) dtime = 0.001f;
         ltime = currentTime;
 
         static bool simulate = false;
@@ -129,6 +149,20 @@ int main(int argc, char** argv) {
             else if (event.type == SDL_EVENT_MOUSE_MOTION && move_toggle)
                 camera.Rotate(-event.motion.yrel * 0.1f, event.motion.xrel * 0.1f);
         }
+
+        // === Sync Physics to Scene ===
+        auto syncBody = [](SceneObject* obj, reactphysics3d::RigidBody* body) {
+            auto t = body->getTransform();
+            obj->position = glm::vec3(t.getPosition().x, t.getPosition().y, t.getPosition().z);
+
+            reactphysics3d::Quaternion q = t.getOrientation();
+            glm::quat glmQ(q.w, q.x, q.y, q.z);
+            obj->rotation = glm::eulerAngles(glm::normalize(glmQ));
+            };
+
+        syncBody(cube1, cubeBody1);
+        syncBody(cube2, cubeBody2);
+        syncBody(cube3, cubeBody3);
 
         editor.Add_GUI_Frame([&]() {
             ImGui::Begin("Scene Objects");
@@ -161,7 +195,6 @@ int main(int argc, char** argv) {
             ImGui::ColorEdit3("Color", glm::value_ptr(lightColor));
             ImGui::End();
 
-
             ImGui::SetNextWindowPos(ImVec2(0, 1080 - 250), ImGuiCond_Always);
             ImGui::SetNextWindowSizeConstraints(ImVec2(1920, 100), ImVec2(1920, 600));
             ImGui::SetNextWindowSize(ImVec2(1920, 200), ImGuiCond_Always);
@@ -173,18 +206,11 @@ int main(int argc, char** argv) {
             ImGui::Text(" ");
             ImGui::Dummy(ImGui::GetContentRegionAvail());
             ImGui::End();
-        });
-        
+            });
 
         renderer.SetLightProperties(lightPos, lightColor);
         scene.RenderScene(renderer, camera);
-
-        reactphysics3d::Transform cubePhysicsTransform = cubeBody->getTransform();
-        reactphysics3d::Vector3 pos = cubePhysicsTransform.getPosition();
-        cube->position = glm::vec3(pos.x, pos.y, pos.z);
-
         editor.Render();
-
         window.Update();
     }
 
