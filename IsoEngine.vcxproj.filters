@@ -99,7 +99,7 @@
     <ClCompile Include="Window.hpp">
       <Filter>Header Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="EditorGUI.cpp">
+    <ClCompile Include="Editor.cpp">
       <Filter>Source Files\Core\Editor</Filter>
     </ClCompile>
     <ClCompile Include="external\tinygltf-2.9.6\tiny_gltf.cc">
@@ -131,7 +131,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EditorGUI.hpp">
+    <ClInclude Include="Editor.hpp">
       <Filter>Header Files\Core\Editor</Filter>
     </ClInclude>
     <ClInclude Include="Utils.hpp">

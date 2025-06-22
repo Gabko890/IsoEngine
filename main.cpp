@@ -17,14 +17,14 @@
 #include "Utils.hpp"
 #include "Renderer.hpp"
 
-#include "EditorGUI.hpp"
+#include "Editor.hpp"
 #include "TerminalHelper.hpp"
 
 
 int main(int argc, char** argv) {
     Window window("ISO Engine Editor", 1920, 1080, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
-    EditorGUI gui(&window);
-    gui.ApplyStyle();
+    Editor editor(&window);
+    editor.ApplyStyle();
 
     SDL_GL_SetSwapInterval(-1);
     float dtime = 0;
@@ -91,7 +91,7 @@ int main(int argc, char** argv) {
         renderer.SetLightProperties(lightPos, lightColor);
         scene.RenderScene(renderer, camera);
 
-        gui.Render_ImGui_Frame([&]() {
+        editor.Render_ImGui_Frame([&]() {
             ImGui::Begin("Scene Objects");
             for (const auto& [id, obj] : scene.GetObjects()) {
                 if (ImGui::TreeNode(id.c_str())) {

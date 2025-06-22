@@ -7,14 +7,14 @@
 
 #include "Window.hpp"
 
-class EditorGUI {
+class Editor {
 private:
 	ImGuiIO* io = NULL;
     Window* sdl_window = NULL;
 
 public:
-	EditorGUI(Window* window);
-	~EditorGUI();
+	Editor(Window* window);
+	~Editor();
 
 	void Render_ImGui_Frame(std::function<void()> Create_Frame);
 	void ApplyStyle(void);

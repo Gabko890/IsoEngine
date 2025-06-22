@@ -1,11 +1,11 @@
-#include "EditorGUI.hpp"
+#include "Editor.hpp"
 #include "Window.hpp"
 
 #include <imgui_impl_sdl3.h>
 #include <imgui_impl_opengl3.h>
 
 
-EditorGUI::EditorGUI(Window* window) {
+Editor::Editor(Window* window) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     io = &ImGui::GetIO();
@@ -16,18 +16,18 @@ EditorGUI::EditorGUI(Window* window) {
 
     ImGui::StyleColorsDark();
 
-    EditorGUI::sdl_window = window;
+    Editor::sdl_window = window;
     ImGui_ImplSDL3_InitForOpenGL(sdl_window->Get_SDL_Window(), sdl_window->Get_GL_Context());
     ImGui_ImplOpenGL3_Init("#version 330");
 }
 
-EditorGUI::~EditorGUI() {
+Editor::~Editor() {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplSDL3_Shutdown();
     ImGui::DestroyContext();
 }
 
-void EditorGUI::Render_ImGui_Frame(std::function<void()> Create_Frame) {
+void Editor::Render_ImGui_Frame(std::function<void()> Create_Frame) {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL3_NewFrame();
     ImGui::NewFrame();
@@ -39,7 +39,7 @@ void EditorGUI::Render_ImGui_Frame(std::function<void()> Create_Frame) {
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void EditorGUI::ApplyStyle(void) {
+void Editor::ApplyStyle(void) {
     // style from https://github.com/ocornut/imgui/issues/707
 
     ImGuiStyle& style = ImGui::GetStyle();
@@ -60,12 +60,12 @@ void EditorGUI::ApplyStyle(void) {
     colors[ImGuiCol_TitleBgCollapsed] = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);
     colors[ImGuiCol_MenuBarBg] = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
     colors[ImGuiCol_ScrollbarBg] = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);
-    colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.24f, 0.24f, 0.24f, 1.00f);
-    colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.24f, 0.24f, 0.24f, 1.00f);
-    colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.24f, 0.24f, 0.24f, 1.00f);
+    colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.50f, 0.37f, 0.89f, 1.00f);
+    colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.50f, 0.37f, 0.89f, 1.00f);
+    colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.50f, 0.37f, 0.89f, 1.00f);
     colors[ImGuiCol_CheckMark] = ImVec4(0.86f, 0.93f, 0.89f, 1.00f);
-    colors[ImGuiCol_SliderGrab] = ImVec4(0.24f, 0.24f, 0.24f, 1.00f);
-    colors[ImGuiCol_SliderGrabActive] = ImVec4(0.24f, 0.24f, 0.24f, 1.00f);
+    colors[ImGuiCol_SliderGrab] = ImVec4(0.38f, 0.07f, 0.78f, 1.00f);
+    colors[ImGuiCol_SliderGrabActive] = ImVec4(0.50f, 0.37f, 0.89f, 1.00f);
     colors[ImGuiCol_Button] = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);
     colors[ImGuiCol_ButtonHovered] = ImVec4(0.24f, 0.24f, 0.24f, 1.00f);
     colors[ImGuiCol_ButtonActive] = ImVec4(0.24f, 0.24f, 0.24f, 1.00f);
