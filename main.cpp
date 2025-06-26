@@ -53,45 +53,7 @@ int main(int argc, char** argv) {
 
     TerminalHelper::scene = &scene;
 
-    scene.AddObject("cube1", "@assets/example_objects/test_cube_color.glb");
-    scene.AddObject("cube2", "@assets/example_objects/test_cube_color.glb");
-    scene.AddObject("cube3", "@assets/example_objects/test_cube_color.glb");
-
-    scene.MoveObject("cube2", glm::vec3(1.2f, 3.4f, 0.4f));
-    scene.MoveObject("cube3", glm::vec3(-0.8f, 9.0f, 0.2f));
-
-    scene.AddObject("ground", "@assets/example_objects/plane_color.glb");
-    scene.MoveObject("ground", glm::vec3(0.0f, -3.0f, 0.0f));
-
-    scene.SetObjectPhysicsEnabled("cube1", true);
-    scene.SetObjectCollisionEnabled("cube1", true);
-    scene.SetObjectMass("cube1", 1.0f);
-
-    scene.SetObjectPhysicsEnabled("cube2", true);
-    scene.SetObjectCollisionEnabled("cube2", true);
-    scene.SetObjectMass("cube2", 1.0f);
-
-    scene.SetObjectPhysicsEnabled("cube3", true);
-    scene.SetObjectCollisionEnabled("cube3", true);
-    scene.SetObjectMass("cube3", 1.0f);
-
-    scene.SetObjectPhysicsEnabled("ground", true);
-    scene.SetObjectCollisionEnabled("ground", true);
-    scene.SetObjectStatic("ground", true);
-    scene.SetObjectCollisionShape("ground", glm::vec3(5.0f, 0.1f, 5.0f));
-
-    /*for (const auto& [id, obj] : scene.GetObjects()) {
-        if (obj.physics.hasCollision) {
-            physicsSystem.CreateRigidBody(
-                id,
-                obj.position,
-                obj.rotation,
-                obj.physics.collisionShapeSize,
-                obj.physics.mass,
-                obj.physics.isStatic
-            );
-        }
-    }*/
+    scene.LoadFromFile("scenes/ph_test.scene");
 
     FPSCamera camera(glm::vec3(0.0f, 0.0f, 5.0f));
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);

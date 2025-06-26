@@ -20,7 +20,7 @@ bool Scene::SaveToFile(const std::string& filePath) const {
             return false;
         }
 
-        const char* signature = "SCENE001";
+        const char* signature = "SCENE002";
         file.write(signature, 8);
 
         file.write(reinterpret_cast<const char*>(&bg_color), sizeof(bg_color));
@@ -60,7 +60,6 @@ bool Scene::LoadFromFile(const std::string& filePath) {
         std::filesystem::path path(filePath);
         path = std::filesystem::absolute(path);
 
-
         if (!std::filesystem::exists(path)) {
             std::cerr << "File does not exist: " << path << std::endl;
             return false;
@@ -81,7 +80,11 @@ bool Scene::LoadFromFile(const std::string& filePath) {
             return false;
         }
 
-        if (std::strncmp(signature, "SCENE001", 8) != 0) {
+        bool hasPhysicsData = false;
+        if (std::strncmp(signature, "SCENE002", 8) == 0) {
+            hasPhysicsData = true;
+        }
+        else if (std::strncmp(signature, "SCENE001", 8) != 0) {
             std::cerr << "Invalid file format or version" << std::endl;
             return false;
         }
@@ -193,10 +196,18 @@ void SceneObject::WriteToBinary(std::ofstream& file) const {
     file.write(reinterpret_cast<const char*>(&position), sizeof(position));
     file.write(reinterpret_cast<const char*>(&rotation), sizeof(rotation));
     file.write(reinterpret_cast<const char*>(&scale), sizeof(scale));
+
+    file.write(reinterpret_cast<const char*>(&physics.hasCollision), sizeof(physics.hasCollision));
+    file.write(reinterpret_cast<const char*>(&physics.isAffectedByPhysics), sizeof(physics.isAffectedByPhysics));
+    file.write(reinterpret_cast<const char*>(&physics.isStatic), sizeof(physics.isStatic));
+    file.write(reinterpret_cast<const char*>(&physics.mass), sizeof(physics.mass));
+    file.write(reinterpret_cast<const char*>(&physics.collisionShapeSize), sizeof(physics.collisionShapeSize));
 }
 
 bool SceneObject::ReadFromBinary(std::ifstream& file) {
     try {
+        std::streampos startPos = file.tellg();
+
         size_t idLen;
         if (!file.read(reinterpret_cast<char*>(&idLen), sizeof(idLen))) return false;
         if (idLen > 1024) return false;
@@ -214,6 +225,22 @@ bool SceneObject::ReadFromBinary(std::ifstream& file) {
         if (!file.read(reinterpret_cast<char*>(&position), sizeof(position))) return false;
         if (!file.read(reinterpret_cast<char*>(&rotation), sizeof(rotation))) return false;
         if (!file.read(reinterpret_cast<char*>(&scale), sizeof(scale))) return false;
+
+        std::streampos beforePhysics = file.tellg();
+
+        bool readSuccess = true;
+        readSuccess &= (bool)file.read(reinterpret_cast<char*>(&physics.hasCollision), sizeof(physics.hasCollision));
+        readSuccess &= (bool)file.read(reinterpret_cast<char*>(&physics.isAffectedByPhysics), sizeof(physics.isAffectedByPhysics));
+        readSuccess &= (bool)file.read(reinterpret_cast<char*>(&physics.isStatic), sizeof(physics.isStatic));
+        readSuccess &= (bool)file.read(reinterpret_cast<char*>(&physics.mass), sizeof(physics.mass));
+        readSuccess &= (bool)file.read(reinterpret_cast<char*>(&physics.collisionShapeSize), sizeof(physics.collisionShapeSize));
+
+        if (!readSuccess) {
+            file.clear();
+            file.seekg(beforePhysics);
+
+            physics = PhysicsProperties{};
+        }
 
         return true;
     }
