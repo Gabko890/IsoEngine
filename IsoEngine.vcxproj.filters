@@ -64,11 +64,11 @@
     <Filter Include="Header Files\Core\Scene">
       <UniqueIdentifier>{37e70c2a-3026-4ef4-8073-dbca469420fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Physics">
-      <UniqueIdentifier>{0beedb89-9f76-47d8-80a9-c2da97c6469c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Core\Physics">
       <UniqueIdentifier>{9f55d092-cdaa-45d5-aa9b-7edad9cfbd48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core\Physics">
+      <UniqueIdentifier>{0beedb89-9f76-47d8-80a9-c2da97c6469c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -189,7 +189,7 @@
       <Filter>Header Files\Core\Editor</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsSystem.hpp">
-      <Filter>Header Files\Physics</Filter>
+      <Filter>Header Files\Core\Physics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
