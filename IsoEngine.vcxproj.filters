@@ -105,7 +105,7 @@
     <ClCompile Include="Window.hpp">
       <Filter>Header Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Editor.cpp">
+    <ClCompile Include="Gui.cpp">
       <Filter>Source Files\Core\Editor</Filter>
     </ClCompile>
     <ClCompile Include="external\tinygltf-2.9.6\tiny_gltf.cc">
@@ -144,9 +144,12 @@
     <ClCompile Include="SceneFile.cpp">
       <Filter>Source Files\Core\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Editor.cpp">
+      <Filter>Source Files\Core\Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Editor.hpp">
+    <ClInclude Include="Gui.hpp">
       <Filter>Header Files\Core\Editor</Filter>
     </ClInclude>
     <ClInclude Include="Utils.hpp">
@@ -190,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="PhysicsSystem.hpp">
       <Filter>Header Files\Core\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

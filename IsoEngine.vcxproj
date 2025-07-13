@@ -190,6 +190,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Editor.cpp" />
+    <ClCompile Include="Gui.cpp" />
     <ClCompile Include="external\glad\src\glad.c" />
     <ClCompile Include="external\ImGui\src\imgui.cpp" />
     <ClCompile Include="external\ImGui\src\imgui_demo.cpp" />
@@ -217,6 +218,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Editor.hpp" />
+    <ClInclude Include="Gui.hpp" />
     <ClInclude Include="FPSCamera.hpp" />
     <ClInclude Include="GLTFLoader.hpp" />
     <ClInclude Include="ICamera.hpp" />
