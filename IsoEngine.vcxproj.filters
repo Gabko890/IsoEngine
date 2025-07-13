@@ -195,7 +195,7 @@
       <Filter>Header Files\Core\Physics</Filter>
     </ClInclude>
     <ClInclude Include="Editor.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Core\Editor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

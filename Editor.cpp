@@ -25,14 +25,14 @@
 
 int editor() {
     Window window("ISO Engine Gui", 1920, 1080, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
+
     Gui gui(&window);
     gui.ApplyStyle();
 
     SDL_GL_SetSwapInterval(-1);
+    
     float dtime = 0;
     Uint64 ltime = SDL_GetTicks();
-
-    SDL_HideCursor();
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
@@ -53,7 +53,7 @@ int editor() {
 
     TerminalHelper::scene = &scene;
 
-    scene.LoadFromFile("scenes/ph_test.scene");
+    //scene.LoadFromFile("scenes/ph_test.scene");
 
     FPSCamera camera(glm::vec3(0.0f, 0.0f, 5.0f));
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
@@ -170,6 +170,7 @@ int editor() {
                     ImGui::TreePop();
                 }
             }
+
             ImGui::End();
 
             ImGui::Begin("Light");
@@ -188,6 +189,65 @@ int editor() {
             ImGui::Text(" ");
             ImGui::Dummy(ImGui::GetContentRegionAvail());
             ImGui::End();
+
+            if (ImGui::BeginMainMenuBar())
+            {
+                if (ImGui::BeginMenu("File"))
+                {
+                    if (ImGui::MenuItem("New")) {
+                        
+                    }
+                    if (ImGui::MenuItem("Open", "Ctrl+O")) {
+                        
+                    }
+                    if (ImGui::MenuItem("Save", "Ctrl+S")) {
+                        
+                    }
+
+                    ImGui::Separator();
+
+                    if (ImGui::BeginMenu("Recent Files"))
+                    {
+                        if (ImGui::MenuItem("file1.txt")) {
+                            
+                        }
+                        if (ImGui::MenuItem("file2.txt")) {
+                            
+                        }
+                        ImGui::EndMenu();
+                    }
+
+                    ImGui::Separator();
+
+                    if (ImGui::MenuItem("Exit")) {
+                        running = false;
+                    }
+
+                    ImGui::EndMenu();
+                }
+
+                if (ImGui::BeginMenu("Edit"))
+                {
+                    if (ImGui::MenuItem("Undo", "Ctrl+Z")) {}
+                    if (ImGui::MenuItem("Redo", "Ctrl+Y")) {}
+                    ImGui::Separator();
+                    if (ImGui::MenuItem("Cut", "Ctrl+X")) {}
+                    if (ImGui::MenuItem("Copy", "Ctrl+C")) {}
+                    if (ImGui::MenuItem("Paste", "Ctrl+V")) {}
+                    ImGui::EndMenu();
+                }
+
+                if (ImGui::BeginMenu("Help"))
+                {
+                    if (ImGui::MenuItem("About")) {
+                        
+                    }
+                    ImGui::EndMenu();
+                }
+
+                ImGui::EndMainMenuBar();
+            }
+
             });
 
         renderer.SetLightProperties(lightPos, lightColor);
