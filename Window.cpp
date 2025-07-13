@@ -78,4 +78,9 @@ SDL_GLContext Window::Get_GL_Context() {
 
 void Window::Update() {
     SDL_GL_SwapWindow(sdl_window);
+
+#if defined(__glad_h_) || defined(__GLEW_H__)
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+#endif
 }

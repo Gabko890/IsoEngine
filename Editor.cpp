@@ -53,10 +53,10 @@ int editor() {
 
     TerminalHelper::scene = &scene;
 
-    //scene.LoadFromFile("scenes/ph_test.scene");
+    scene.LoadFromFile("scenes/ph_test.scene");
 
     FPSCamera camera(glm::vec3(0.0f, 0.0f, 5.0f));
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), 1405.0f / 775.0f, 0.1f, 100.0f);
     renderer.SetProjectionMatrix(projection);
 
     glm::vec3 lightPos(0.0f, 2.0f, 2.0f);
@@ -67,6 +67,27 @@ int editor() {
 
     bool running = true;
     SDL_Event event;
+
+    GLuint fbo, fboTexture, rbo;
+    glGenFramebuffers(1, &fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+    glGenTextures(1, &fboTexture);
+    glBindTexture(GL_TEXTURE_2D, fboTexture);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1405, 775, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, fboTexture, 0);
+
+    glGenRenderbuffers(1, &rbo);
+    glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+    glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 1405, 775);
+    glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        std::cerr << "Framebuffer not complete!" << std::endl;
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     while (running) {
         Uint64 currentTime = SDL_GetTicks();
@@ -247,12 +268,24 @@ int editor() {
 
                 ImGui::EndMainMenuBar();
             }
+        });
 
-            });
+
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+        glViewport(0, 0, 1405, 775);
 
         renderer.SetLightProperties(lightPos, lightColor);
         scene.RenderScene(renderer, camera);
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+        gui.Add_GUI_Frame([&]() {
+            ImGui::Begin("Render View");
+            ImGui::Image((ImTextureID)(intptr_t)fboTexture, ImVec2(1405, 775), ImVec2(0, 1), ImVec2(1, 0));
+            ImGui::End();
+        });
         gui.Render();
+
         window.Update();
     }
 

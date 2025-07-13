@@ -3,7 +3,7 @@ Pos=60,60
 Size=400,400
 
 [Window][Scene Objects]
-Pos=-1,18
+Pos=0,19
 Size=236,813
 
 [Window][terminal]
@@ -15,10 +15,14 @@ Pos=0,1030
 Size=1920,50
 
 [Window][Light]
-Pos=1656,18
-Size=265,813
+Pos=1658,18
+Size=263,813
 
 [Window][##terminal:auto_complete]
 Pos=8,1024
-Size=555,29
+Size=79,29
+
+[Window][Render View]
+Pos=235,19
+Size=1425,812
 
